@@ -9,16 +9,22 @@ public class Bills {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	Integer sequenceId;
+
 	@ManyToOne
 	@JoinColumn(name = "biller_code")
 	MasterBiller billerCode;
+
 	String consumerNumber;
+
 	Double amount;
+
 	LocalDate dueDate;
+
 	@Enumerated(value = EnumType.STRING)
 	BillStatus status;
+
 	@OneToOne
-	@JoinColumn(name = "account_no",unique = true)
+	@JoinColumn(name = "account_no", unique = true)
 	Account account;
 
 	public Account getAccount() {

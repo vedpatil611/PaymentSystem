@@ -14,6 +14,11 @@ import com.barclays.paymentsystem.entity.MasterBiller;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 import com.barclays.paymentsystem.repository.MasterBillerRepository;
 
+/**
+ * MasterBillerServiceImp - MasterBillerService implementation class
+ * @author Ved
+ *
+ */
 @Service
 @Transactional
 public class MasterBillerServiceImp implements MasterBillerService {
