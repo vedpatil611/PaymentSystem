@@ -17,7 +17,7 @@ public class RegisteredBiller {
 	MasterBiller billerCode;
 	String consumerNumber;
 	@ManyToOne
-	@JoinColumn(name = "account_number")
+	@JoinColumn(name = "account_no")
 	Account account;
 	Boolean autopay;
 	Double autopayLimit;
