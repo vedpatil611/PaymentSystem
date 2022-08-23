@@ -1,6 +1,7 @@
 package com.barclays.paymentsystem.service;
 
 import com.barclays.paymentsystem.dto.BillDTO;
+import com.barclays.paymentsystem.entity.Account;
 import com.barclays.paymentsystem.entity.Bills;
 import com.barclays.paymentsystem.entity.MasterBiller;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
@@ -23,4 +24,6 @@ public class BillServiceImp implements BillService{
         Bills newBill= billRepository.save(bills);
         return newBill.getConsumerNumber();
     }
+    
 }
+

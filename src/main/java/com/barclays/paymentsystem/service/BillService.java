@@ -7,3 +7,4 @@ import com.barclays.paymentsystem.exception.PaymentSystemException;
 public interface BillService {
     String addNewBill(BillDTO billDTO) throws PaymentSystemException;
 }
+
