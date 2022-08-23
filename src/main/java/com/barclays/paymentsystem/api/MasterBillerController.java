@@ -32,7 +32,8 @@ public class MasterBillerController {
 		MasterBillerDTO masterBiller = masterBillerService.getMasterBiller(masterBillerId);
 		return new ResponseEntity<>(masterBiller, HttpStatus.OK);
 	}
-	
+	 
+	/* Adding new biller to master biller list */
 	@PostMapping("/biller/new")
 	public ResponseEntity<String> addNewMasterBiller(@RequestBody MasterBillerDTO masterBillerDTO) throws PaymentSystemException {
 		String newCode = masterBillerService.addNewMasterBiller(masterBillerDTO);
