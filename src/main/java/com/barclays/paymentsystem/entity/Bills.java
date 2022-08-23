@@ -21,7 +21,7 @@ public class Bills {
 	LocalDate dueDate;
 
 	@Enumerated(value = EnumType.STRING)
-	BillStatus status;
+	BillStatus status = BillStatus.PENDING;
 
 	@OneToOne
 	@JoinColumn(name = "account_no", unique = true)

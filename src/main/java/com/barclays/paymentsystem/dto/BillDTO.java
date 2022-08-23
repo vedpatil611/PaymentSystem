@@ -13,9 +13,9 @@ public class BillDTO {
     String consumerNumber;
     double amount;
     LocalDate dueDate;
-    String status;
+    BillStatus status = BillStatus.PENDING;
 
-    public BillDTO(MasterBiller billerCode, String consumerNumber, double amount, LocalDate dueDate, String status) {
+    public BillDTO(MasterBiller billerCode, String consumerNumber, double amount, LocalDate dueDate, BillStatus status) {
         this.billerCode = billerCode;
         this.consumerNumber = consumerNumber;
         this.amount = amount;
@@ -29,7 +29,7 @@ public class BillDTO {
         bills.setConsumerNumber(consumerNumber);
         bills.setAmount(amount);
         bills.setDueDate(dueDate);
-        bills.setStatus(BillStatus.PENDING);
+        bills.setStatus(status);
         return bills;
     }
 
@@ -73,11 +73,11 @@ public class BillDTO {
         this.dueDate = dueDate;
     }
 
-    public String getStatus() {
+    public BillStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(BillStatus status) {
         this.status = status;
     }
 }
