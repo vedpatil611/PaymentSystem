@@ -10,11 +10,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 import com.barclays.paymentsystem.service.PaymentService;
 
+/*
+ * PaymentlController - Rest api for payment
+   @author - P3BC
+ */
+
 @RestController
 public class PaymentController {
 	
 	@Autowired
 	PaymentService paymentService;
+	
+	/**
+	 * manuallyPayBill - Start new Payment
+	 * @param username - Username of user initiated payment
+	   @param billerCode - biller code of biller to pay bill
+	 * @return Manual bill pay
+	 * @throws PaymentSystemException
+	 */
 	
 	@PostMapping("/user/{username}/paybill/{billerCode}")
 	public ResponseEntity<String> manuallyPayBill(@PathVariable String username, @PathVariable String billerCode) throws PaymentSystemException {
