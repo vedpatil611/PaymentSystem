@@ -3,6 +3,7 @@ package com.barclays.paymentsystem.service;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,12 @@ import com.barclays.paymentsystem.entity.Account;
 import com.barclays.paymentsystem.entity.BillStatus;
 import com.barclays.paymentsystem.entity.Bills;
 import com.barclays.paymentsystem.entity.RegisteredBiller;
+import com.barclays.paymentsystem.entity.User;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 import com.barclays.paymentsystem.repository.AccountRepository;
 import com.barclays.paymentsystem.repository.BillRepository;
 import com.barclays.paymentsystem.repository.RegisteredBillerRespository;
+import com.barclays.paymentsystem.repository.UserRepository;
 
 /**
  * AutoPayBillServiceImpl - AutoPayBillService implementation class
@@ -27,7 +30,7 @@ import com.barclays.paymentsystem.repository.RegisteredBillerRespository;
 
 @Service(value = "autoPayBillService")
 @Transactional
-public class AutoPayBillServiceImpl implements AutoPayBillService {
+public class PaymentServiceImpl implements PaymentService {
 
 	@Autowired
 	BillRepository billRepository;
@@ -37,6 +40,9 @@ public class AutoPayBillServiceImpl implements AutoPayBillService {
 
 	@Autowired
 	AccountRepository accountRepository;
+	
+	@Autowired
+	UserRepository userRepository;
 	
 	@Override
 	public String autoPayBills() throws PaymentSystemException {
@@ -60,9 +66,6 @@ public class AutoPayBillServiceImpl implements AutoPayBillService {
 				
 				if (!registeredBiller.getAutopay()) continue;
 				
-				System.out.println("fnlhflwhad");
-				System.out.println("fnlhflwhad");
-				
 				if (registeredBiller.getAutopayLimit() == null) {
 					payBill(pendingBill);
 				} else if (registeredBiller.getAutopayLimit() != null && registeredBiller.getAutopayLimit() < pendingBill.getAmount()) {
@@ -74,6 +77,18 @@ public class AutoPayBillServiceImpl implements AutoPayBillService {
 		return SystemConstants.PENDING_BILLS_SUCCESSFULLY_PAID_RESPONSE;
 	}
 
+	@Override
+	public String manuallyPayBill(String username, String billerCode) throws PaymentSystemException {
+		Optional<User> opt = userRepository.findById(username);
+		if (!opt.isPresent())
+			throw new PaymentSystemException(SystemConstants.USER_NOT_FOUND_RESPONSE);
+		
+		User user = opt.get();
+		Bills bill = billRepository.findByAccountAndBillerCode_billerCode(user.getAccount(), billerCode);
+		
+		return payBill(bill);
+	}
+	
 	@Override
 	public String payBill(Bills bill) throws PaymentSystemException {
 		Account account = bill.getAccount();
@@ -88,8 +103,6 @@ public class AutoPayBillServiceImpl implements AutoPayBillService {
 			Account newAccount = accountRepository.save(account);
 			
 			if (newBill != null && newAccount != null) {
-
-				
 				return SystemConstants.BILL_PAYMENT_SUCCESS_RESPONSE;
 				
 				// TODO: send mail here
