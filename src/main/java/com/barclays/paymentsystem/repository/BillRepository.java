@@ -14,7 +14,7 @@ public interface BillRepository extends CrudRepository<Bills, Integer> {
 
 	List<Bills> findByStatus(BillStatus status);
 	
-	Bills findByAccountAndBillerCode_billerCode(Account account, String billerCode);
+	Bills findByAccountAndBillerCode_billerCodeAndStatus(Account account, String billerCode, BillStatus status);
 	
 	List<Bills> findByAccount(Account account);
 	

@@ -30,8 +30,10 @@ public class BillsController {
 	}
 
 	@GetMapping("/user/{username}/bills")
-	public ResponseEntity<List<BillDTO>> getBills(@PathVariable String username, @RequestParam LocalDate from,
-			@RequestParam LocalDate to) throws PaymentSystemException {
+	public ResponseEntity<List<BillDTO>> getBills(@PathVariable String username,
+			@RequestParam(required = false) LocalDate from, 
+			@RequestParam(required = false) LocalDate to)
+			throws PaymentSystemException {
 
 		if (from == null || to == null) {
 			List<BillDTO> bills = billService.findAll(username);
