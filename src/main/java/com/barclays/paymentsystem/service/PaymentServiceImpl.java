@@ -1,21 +1,9 @@
 package com.barclays.paymentsystem.service;
 
-<<<<<<< HEAD
-import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Service;
 
-import com.barclays.paymentsystem.dto.AccountDTO;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 
-@Service
-@Transactional
-public class PaymentServiceImpl implements PaymentService {
-
-	@Override
-	public void manualPayment(AccountDTO accountDTO) throws PaymentSystemException {
-		// TODO Auto-generated method stub
-=======
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -23,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.barclays.paymentsystem.constants.SystemConstants;
@@ -36,7 +23,6 @@ import com.barclays.paymentsystem.entity.Bills;
 import com.barclays.paymentsystem.entity.RegisteredBiller;
 import com.barclays.paymentsystem.entity.TransactionType;
 import com.barclays.paymentsystem.entity.User;
-import com.barclays.paymentsystem.exception.PaymentSystemException;
 import com.barclays.paymentsystem.repository.AccountRepository;
 import com.barclays.paymentsystem.repository.AccountTransactionRepository;
 import com.barclays.paymentsystem.repository.BillRepository;
@@ -187,5 +173,4 @@ public class PaymentServiceImpl implements PaymentService {
 		newTransaction = accountTransactionRepository.save(newTransaction);
 		return newTransaction;
 	}
->>>>>>> 58607f1eccdc5f8eb90676d49369219203670b6a
 }

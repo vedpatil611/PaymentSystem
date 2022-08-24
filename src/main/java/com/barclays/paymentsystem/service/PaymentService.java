@@ -1,14 +1,5 @@
 package com.barclays.paymentsystem.service;
 
-<<<<<<< HEAD
-import com.barclays.paymentsystem.dto.AccountDTO;
-import com.barclays.paymentsystem.entity.Account;
-import com.barclays.paymentsystem.exception.PaymentSystemException;
-
-public interface PaymentService {
-	
-    public void manualPayment(AccountDTO accountDTO) throws PaymentSystemException;
-=======
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 
 /**
@@ -40,5 +31,4 @@ public interface PaymentService {
 	 * @throws PaymentSystemException
 	 */
 //	String payBill(Bills bill) throws PaymentSystemException;
->>>>>>> 58607f1eccdc5f8eb90676d49369219203670b6a
 }
