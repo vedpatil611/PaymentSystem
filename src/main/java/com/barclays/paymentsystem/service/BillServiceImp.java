@@ -1,42 +1,44 @@
 package com.barclays.paymentsystem.service;
 
-import com.barclays.paymentsystem.constants.SystemConstants;
-import com.barclays.paymentsystem.dto.BillDTO;
-import com.barclays.paymentsystem.entity.Bills;
-import com.barclays.paymentsystem.entity.MasterBiller;
-import com.barclays.paymentsystem.exception.PaymentSystemException;
-import com.barclays.paymentsystem.repository.BillRepository;
-import com.barclays.paymentsystem.repository.MasterBillerRepository;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
+import com.barclays.paymentsystem.constants.SystemConstants;
+import com.barclays.paymentsystem.dto.BillDTO;
+import com.barclays.paymentsystem.entity.Account;
+import com.barclays.paymentsystem.entity.Bills;
+import com.barclays.paymentsystem.entity.User;
+import com.barclays.paymentsystem.exception.PaymentSystemException;
+import com.barclays.paymentsystem.repository.BillRepository;
+import com.barclays.paymentsystem.repository.UserRepository;
 
-import javax.mail.internet.MimeMessage;
-import javax.xml.transform.Templates;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Map;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
-import freemarker.template.TemplateException;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
 @Service
 @Transactional
-public class BillServiceImp implements BillService{
+public class BillServiceImp implements BillService {
 
-    @Autowired
-    BillRepository billRepository;
+	@Autowired
+	BillRepository billRepository;
+	
+	@Autowired
+	UserRepository userRepository;
 
     @Autowired
     private Configuration config;
@@ -44,9 +46,43 @@ public class BillServiceImp implements BillService{
     @Autowired
     private JavaMailSender mailSender;
 
+	@Override
+	public List<BillDTO> findAll(String username) throws PaymentSystemException {
+		Optional<User> opt = userRepository.findById(username);
 
+		if (!opt.isPresent())
+			throw new PaymentSystemException(SystemConstants.USER_NOT_FOUND_RESPONSE);
 
-    @Override
+		User user = opt.get();
+		Account account = user.getAccount();
+
+		List<Bills> list = billRepository.findByAccount(account);
+		List<BillDTO> transactionList = new ArrayList<>();
+		list.forEach(transaction -> transactionList.add(new BillDTO(transaction)));
+
+		return transactionList;
+	}
+
+	@Override
+	public List<BillDTO> findAllBetweenDate(String username, LocalDate from, LocalDate to)
+			throws PaymentSystemException {
+		Optional<User> opt = userRepository.findById(username);
+
+		if (!opt.isPresent())
+			throw new PaymentSystemException(SystemConstants.USER_NOT_FOUND_RESPONSE);
+
+		User user = opt.get();
+		Account account = user.getAccount();
+
+		List<Bills> list = billRepository.findByAccountAndDueDateBetween(account, from, to);
+		List<BillDTO> transactionList = new ArrayList<>();
+
+		list.forEach(transaction -> transactionList.add(new BillDTO(transaction)));
+
+		return transactionList;
+	}
+	
+	@Override
     public String addNewBill(BillDTO billDTO) throws PaymentSystemException {
         Bills bills = billDTO.toEntity();
         Bills newBill= billRepository.save(bills);

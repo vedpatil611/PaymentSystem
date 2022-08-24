@@ -22,9 +22,7 @@ public class Bills {
 	MasterBiller billerCode;
 
 	String consumerNumber;
-
 	Double amount;
-
 	LocalDate dueDate;
 
 	@Enumerated(value = EnumType.STRING)

@@ -5,6 +5,7 @@ insert into account(sequence_id, account_no, current_balance, email_id, name) va
 insert into account(sequence_id, account_no, current_balance, email_id, name) values(3,1000002,400000.0,"machop@gmail.com","Machop");
 insert into account(sequence_id, account_no, current_balance, email_id, name) values(4,1000003,300000.0,"kunal@gmail.com","kunal");
 insert into account(sequence_id, account_no, current_balance, email_id, name) values(5,1000004,600000.0,"vedangi@gmail.com","vedangi");
+insert into account(sequence_id, account_no, current_balance, email_id, name) values(6,1000005,600000.0,"vedpatil611@gmail.com","ved");
 
 insert into master_biller values("B001","Vodafone");
 insert into master_biller values("B002","Airtel");

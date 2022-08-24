@@ -141,12 +141,9 @@ public class PaymentServiceImpl implements PaymentService {
 		billDTO.setStatus(BillStatus.PENDING);
 		
 		Bills newBill = billDTO.toEntity();
-//		Account account = bill.getAccount();
-//		Account account = accountRepository.findById(bill.getAccount().getAccountNo()).get();
 		newBill.setAccount(bill.getAccount());
 		newBill = billRepository.save(newBill);
-//		newBill.setAccount(account);
-//		newBill = billRepository.save(newBill);
+
 		return newBill;
 	}
 	

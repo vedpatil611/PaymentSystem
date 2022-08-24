@@ -9,6 +9,9 @@ public class AccountDTO {
 	String emailId;
 	Double currentBalance;
 
+	public AccountDTO() {
+	}
+
 	public AccountDTO(Account account) {
 		sequenceId = account.getSequenceId();
 		accountNo = account.getAccountNo();
@@ -16,7 +19,7 @@ public class AccountDTO {
 		emailId = account.getEmailId();
 		currentBalance = account.getCurrentBalance();
 	}
-	
+
 	public Account toEntity() {
 		Account account = new Account();
 		account.setSequenceId(sequenceId);
@@ -26,7 +29,7 @@ public class AccountDTO {
 		account.setCurrentBalance(currentBalance);
 		return account;
 	}
-	
+
 	public Integer getSequenceId() {
 		return sequenceId;
 	}
