@@ -22,19 +22,38 @@ import com.barclays.paymentsystem.exception.PaymentSystemException;
 import com.barclays.paymentsystem.service.AccountTransactionService;
 import com.barclays.paymentsystem.utils.TransactionExporter;
 
+/*
+ * AccountTransactionController - Rest api for payment transactions
+   @author - P3BC
+ */
+
 @RestController
 public class AccountTransactionController {
 
 	@Autowired(required = false)
 	AccountTransactionService managerControllerService;
-
-	// get all account details
+	
+	
+        /**
+	 * getAllAccountTransaction - get all transactions of account
+	 * @param username - username of customer
+	 * @return all transactions
+	 * @throws PaymentSystemException
+	 */
+	
 	@GetMapping("/{username}/accountTransaction")
 	public ResponseEntity<List<AccountTransactionDTO>> getAllAccountTransaction(@PathVariable String username)
 			throws PaymentSystemException {
 		return new ResponseEntity<>(managerControllerService.findAll(username), HttpStatus.OK);
 	}
 
+	 /**
+	 * downloadAllAccountTransaction - download all transactions of account
+	 * @param username - username of customer
+	 * @return all transactions
+	 * @throws PaymentSystemException
+	 */
+	
 	@GetMapping("/{username}/accountTransaction/download")
 	public void downloadAllAccountTransaction(@PathVariable String username, HttpServletResponse response)
 			throws PaymentSystemException {
@@ -54,6 +73,13 @@ public class AccountTransactionController {
 		}
 	}
 
+	 /**
+	 * getAllAccountTransactionByStartDate - get all transactions of an account with given date
+	 * @param username - username of customer
+	 * @return all transactions with given date
+	 * @throws PaymentSystemException
+	 */
+	
 	@GetMapping("/{username}/accountTransactionBetween")
 	public ResponseEntity<List<AccountTransactionDTO>> getAllAccountTransactionByStartDate(
 			@PathVariable String username, @RequestParam LocalDateTime startDate, @RequestParam LocalDateTime endDate)
@@ -63,6 +89,13 @@ public class AccountTransactionController {
 				HttpStatus.OK);
 	}
 
+	/**
+	 * downloadAccountTransactionByStartDate - download all transactions of an account with given date
+	 * @param username - username of customer
+	 * @return all transactions with given date
+	 * @throws PaymentSystemException
+	 */
+	
 	@GetMapping("/{username}/accountTransactionBetween/download")
 	public void downloadAccountTransactionByStartDate(@PathVariable String username,
 			@RequestParam LocalDateTime startDate,
