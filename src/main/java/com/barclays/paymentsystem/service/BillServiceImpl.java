@@ -93,10 +93,13 @@ public class BillServiceImpl implements BillService {
 	
 	@Override
     public String addNewBill(BillDTO billDTO) throws PaymentSystemException {
+		if (billDTO == null)
+			throw new PaymentSystemException(SystemConstants.BILL_DATA_NOT_PROVIDED);
+		
         Bill bills = billDTO.toEntity();
         Bill newBill= billRepository.save(bills);
         
-        MasterBiller biller = masterBillerRepository.findById(newBill.getBillerCode().getBillerCode()).get();
+        MasterBiller biller = masterBillerRepository.findById(newBill.getMasterBiller().getBillerCode()).get();
         
         Optional<Account> opt = accountRepository.findById(newBill.getAccount().getAccountNo());
         

@@ -33,7 +33,6 @@ import com.barclays.paymentsystem.repository.UserRepository;
  * @author Ved
  *
  */
-
 @Service(value = "autoPayBillService")
 @Transactional
 public class PaymentServiceImpl implements PaymentService {
@@ -66,7 +65,7 @@ public class PaymentServiceImpl implements PaymentService {
 			if (dateDiff.getYears() == 0 && dateDiff.getMonths() == 0 && dateDiff.getDays() <= 3) {
 				RegisteredBiller registeredBiller = registeredBillerRepository.findByConsumerNumberAndBillerCodeAndAccount(
 					pendingBill.getConsumerNumber(), 
-					pendingBill.getBillerCode(), 
+					pendingBill.getMasterBiller(), 
 					pendingBill.getAccount()
 				);
 								
@@ -76,9 +75,9 @@ public class PaymentServiceImpl implements PaymentService {
 				if (!registeredBiller.getAutopay()) continue;
 				
 				if (registeredBiller.getAutopayLimit() == null) {
-					payBill(pendingBill, "Auto paid bills");
+					payBill(pendingBill, "Auto paid bill");
 				} else if (registeredBiller.getAutopayLimit() != null && registeredBiller.getAutopayLimit() < pendingBill.getAmount()) {
-					payBill(pendingBill, "Auto paid bills");
+					payBill(pendingBill, "Auto paid bill");
 				}
 			}
 		}

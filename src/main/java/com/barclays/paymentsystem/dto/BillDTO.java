@@ -38,7 +38,7 @@ public class BillDTO {
     
     public BillDTO(Bill bill) {
     	this.sequenceId = bill.getSequenceId();
-    	this.billerCode = bill.getBillerCode();
+    	this.billerCode = bill.getMasterBiller();
     	this.consumerNumber = bill.getConsumerNumber();
     	this.amount = bill.getAmount();
     	this.dueDate = bill.getDueDate();
@@ -48,7 +48,7 @@ public class BillDTO {
 
     public Bill toEntity() {
         Bill bills = new Bill();
-        bills.setBillerCode(billerCode);
+        bills.setMasterBiller(billerCode);
         bills.setConsumerNumber(consumerNumber);
         bills.setAmount(amount);
         bills.setDueDate(dueDate);

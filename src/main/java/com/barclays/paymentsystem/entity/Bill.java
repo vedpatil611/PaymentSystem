@@ -19,7 +19,7 @@ public class Bill {
 
 	@ManyToOne
 	@JoinColumn(name = "biller_code",unique = false)
-	MasterBiller billerCode;
+	MasterBiller masterBiller;
 
 	String consumerNumber;
 	Double amount;
@@ -48,12 +48,12 @@ public class Bill {
 		this.sequenceId = sequenceId;
 	}
 
-	public MasterBiller getBillerCode() {
-		return billerCode;
+	public MasterBiller getMasterBiller() {
+		return masterBiller;
 	}
 
-	public void setBillerCode(MasterBiller billerCode) {
-		this.billerCode = billerCode;
+	public void setMasterBiller(MasterBiller billerCode) {
+		this.masterBiller = billerCode;
 	}
 
 	public String getConsumerNumber() {

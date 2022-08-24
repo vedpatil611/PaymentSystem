@@ -62,7 +62,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String subscribeNewBiller(String username, RegisteredBillerDTO registeredBillerDTO) throws PaymentSystemException {
-
+		if (registeredBillerDTO == null) 
+			throw new PaymentSystemException(SystemConstants.NEW_SUBSCRIPTION_DETAILS_NOT_PROVIDED);
 		// Optional<MasterBiller> masterBiller = masterRepo.findById(billerCode);
 		Optional<User> user = userRepo.findById(username);
 
