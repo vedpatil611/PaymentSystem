@@ -9,6 +9,13 @@ import com.barclays.paymentsystem.entity.Account;
 import com.barclays.paymentsystem.entity.BillStatus;
 import com.barclays.paymentsystem.entity.Bill;
 
+/**
+ * BillRepository - Interface for Bill table in database
+ * @author PB3C
+ *
+ */
+
+
 public interface BillRepository extends CrudRepository<Bill, Integer> {
 	List<Bill> findBySequenceId(Integer sequenceId);
 

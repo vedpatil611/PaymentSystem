@@ -7,7 +7,7 @@ import com.barclays.paymentsystem.exception.PaymentSystemException;
 
 /**
  * MasterBillerService - MasterBiller table service
- * @author Ved
+ * @author PB3C
  *
  */
 public interface MasterBillerService {

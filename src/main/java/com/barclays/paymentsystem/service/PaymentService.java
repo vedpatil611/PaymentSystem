@@ -3,7 +3,7 @@ package com.barclays.paymentsystem.service;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 
 /**
- * PaymentService - Payment service
+ * PaymentService - Payment service interface
  * @author Ved
  *
  */

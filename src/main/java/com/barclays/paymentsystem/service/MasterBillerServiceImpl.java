@@ -16,7 +16,7 @@ import com.barclays.paymentsystem.repository.MasterBillerRepository;
 
 /**
  * MasterBillerServiceImp - MasterBillerService implementation class
- * @author Ved
+ * @author PB3C
  *
  */
 @Service
@@ -25,6 +25,13 @@ public class MasterBillerServiceImpl implements MasterBillerService {
 	
 	@Autowired
 	MasterBillerRepository masterBillerRepository;
+	
+	/**
+	 * @getAllMasterBiller
+	 * @param null
+	 * @return List of Biller
+	 * @throws PaymentSystemException
+	 */
 
 	@Override
 	public List<MasterBillerDTO> getAllMasterBiller() throws PaymentSystemException {
@@ -34,6 +41,13 @@ public class MasterBillerServiceImpl implements MasterBillerService {
 		list.forEach(biller -> billerList.add(new MasterBillerDTO(biller)));
 		return billerList;
 	}
+	
+	/**
+	 * @getAllMasterBiller
+	 * @param billerCode
+	 * @return new biller
+	 * @throws PaymentSystemException
+	 */
 
 	@Override
 	public MasterBillerDTO getMasterBiller(String billerCode) throws PaymentSystemException {
@@ -43,6 +57,13 @@ public class MasterBillerServiceImpl implements MasterBillerService {
 		
 		return new MasterBillerDTO(opt.get());
 	}
+	
+	/**
+	 * @addNewMasterBiller
+	 * @param masterBillerDTO
+	 * @return Biller Code of New Biller
+	 * @throws PaymentSystemException
+	 */
 
 	@Override
 	public String addNewMasterBiller(MasterBillerDTO masterBillerDTO) {
