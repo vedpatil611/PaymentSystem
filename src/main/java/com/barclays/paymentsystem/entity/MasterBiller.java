@@ -1,5 +1,7 @@
 package com.barclays.paymentsystem.entity;
 
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -24,4 +26,22 @@ public class MasterBiller {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(billerCode, name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MasterBiller other = (MasterBiller) obj;
+		return Objects.equals(billerCode, other.billerCode) && Objects.equals(name, other.name);
+	}
+
 }

@@ -5,28 +5,41 @@ import com.barclays.paymentsystem.entity.BillStatus;
 import com.barclays.paymentsystem.entity.Bills;
 import com.barclays.paymentsystem.entity.MasterBiller;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 
 public class BillDTO {
-    int sequenceId;
+    Integer sequenceId;
     MasterBiller billerCode;
     String consumerNumber;
     double amount;
     LocalDate dueDate;
-    String status;
-
-    Account account;
+    BillStatus status = BillStatus.PENDING;
+    AccountDTO account;
 
     public BillDTO(){
 
     }
+
+    public BillDTO(MasterBiller billerCode, String consumerNumber, double amount, LocalDate dueDate, BillStatus status) {
+    	
+    }
+    
     public BillDTO(MasterBiller billerCode, String consumerNumber, double amount, LocalDate dueDate,Account account) {
         this.billerCode = billerCode;
         this.consumerNumber = consumerNumber;
         this.amount = amount;
         this.dueDate = dueDate;
-        this.account=account;
+        this.account= new AccountDTO(account);
+    }
+    
+    public BillDTO(Bills bill) {
+    	this.sequenceId = bill.getSequenceId();
+    	this.billerCode = bill.getBillerCode();
+    	this.consumerNumber = bill.getConsumerNumber();
+    	this.amount = bill.getAmount();
+    	this.dueDate = bill.getDueDate();
+    	this.status = bill.getStatus();
+    	this.account = new AccountDTO(bill.getAccount());
     }
 
     public Bills toEntity() {
@@ -35,16 +48,16 @@ public class BillDTO {
         bills.setConsumerNumber(consumerNumber);
         bills.setAmount(amount);
         bills.setDueDate(dueDate);
-        bills.setStatus(BillStatus.PENDING);
-        bills.setAccount(account);
+        bills.setStatus(status);
+        bills.setAccount(account.toEntity());
         return bills;
     }
 
-    public int getSequenceId() {
+    public Integer getSequenceId() {
         return sequenceId;
     }
 
-    public void setSequenceId(int sequenceId) {
+    public void setSequenceId(Integer sequenceId) {
         this.sequenceId = sequenceId;
     }
 
@@ -80,19 +93,19 @@ public class BillDTO {
         this.dueDate = dueDate;
     }
 
-    public String getStatus() {
+    public BillStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(BillStatus status) {
         this.status = status;
     }
 
-    public Account getAccount() {
-        return account;
-    }
+	public AccountDTO getAccount() {
+		return account;
+	}
 
-    public void setAccount(Account account) {
-        this.account = account;
-    }
+	public void setAccount(AccountDTO account) {
+		this.account = account;
+	}
 }
