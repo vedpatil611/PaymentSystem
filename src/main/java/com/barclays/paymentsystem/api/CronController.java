@@ -9,11 +9,24 @@ import org.springframework.web.bind.annotation.RestController;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 import com.barclays.paymentsystem.service.PaymentService;
 
+/*
+ * CronController - Rest api for Auto Pay bills
+   @author PB3C
+ */
+
 @RestController
 public class CronController {
 	
 	@Autowired
 	PaymentService autoPayBillService;
+	
+	/**
+	 * payAllBills - Auto Pay Bills   
+	 * @param 
+	 * @return Auto pay bills
+	 * @throws PaymentSystemException
+	 */
+
 	
 	@PostMapping("/cron/payall")
 	public ResponseEntity<String> payAllBills() throws PaymentSystemException {
