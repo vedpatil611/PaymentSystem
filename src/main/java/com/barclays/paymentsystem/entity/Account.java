@@ -1,5 +1,7 @@
 package com.barclays.paymentsystem.entity;
 
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -54,5 +56,24 @@ public class Account {
 	
 	public void setCurrentBalance(Double currentBalance) {
 		this.currentBalance = currentBalance;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(accountNo, currentBalance, emailId, name, sequenceId);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Account other = (Account) obj;
+		return Objects.equals(accountNo, other.accountNo) && Objects.equals(currentBalance, other.currentBalance)
+				&& Objects.equals(emailId, other.emailId) && Objects.equals(name, other.name)
+				&& Objects.equals(sequenceId, other.sequenceId);
 	}
 }
