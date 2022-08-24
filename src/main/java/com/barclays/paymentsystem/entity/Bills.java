@@ -11,7 +11,7 @@ public class Bills {
 	Integer sequenceId;
 
 	@ManyToOne
-	@JoinColumn(name = "biller_code",unique = true)
+	@JoinColumn(name = "biller_code",unique = false)
 	MasterBiller billerCode;
 
 	String consumerNumber;
@@ -21,11 +21,10 @@ public class Bills {
 	LocalDate dueDate;
 
 	@Enumerated(value = EnumType.STRING)
-
 	BillStatus status = BillStatus.PENDING;
 
 	@OneToOne
-	@JoinColumn(name = "account_no", unique = true)
+	@JoinColumn(name = "account_no",unique = false)
 	Account account;
 
 	public Account getAccount() {

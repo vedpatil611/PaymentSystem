@@ -4,7 +4,6 @@ import com.barclays.paymentsystem.entity.BillStatus;
 import com.barclays.paymentsystem.entity.Bills;
 import com.barclays.paymentsystem.entity.MasterBiller;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 
 public class BillDTO {
@@ -15,6 +14,10 @@ public class BillDTO {
     LocalDate dueDate;
     BillStatus status = BillStatus.PENDING;
 
+    public BillDTO() {
+    	
+    }
+    
     public BillDTO(MasterBiller billerCode, String consumerNumber, double amount, LocalDate dueDate, BillStatus status) {
         this.billerCode = billerCode;
         this.consumerNumber = consumerNumber;
