@@ -14,7 +14,7 @@ public class RegisteredBiller {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Integer sequenceID;
 	@ManyToOne
-	@JoinColumn(name = "biller_code", unique = true)
+	@JoinColumn(name = "biller_code", unique = false)
 	MasterBiller billerCode;
 	
 	String consumerNumber;
