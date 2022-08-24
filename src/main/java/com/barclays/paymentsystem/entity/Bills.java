@@ -2,7 +2,14 @@ package com.barclays.paymentsystem.entity;
 
 import java.time.LocalDate;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Bills {
@@ -23,8 +30,8 @@ public class Bills {
 	@Enumerated(value = EnumType.STRING)
 	BillStatus status = BillStatus.PENDING;
 
-	@OneToOne
-	@JoinColumn(name = "account_no", unique = true)
+	@ManyToOne
+	@JoinColumn(name = "account_no", unique = false)
 	Account account;
 
 	public Account getAccount() {

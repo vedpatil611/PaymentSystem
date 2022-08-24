@@ -2,6 +2,8 @@ package com.barclays.paymentsystem.constants;
 
 public interface SystemConstants {
 	public static final String BILLER_NOT_FOUND_RESPONSE = "Biller not found";
+	public static final String BILL_NOT_FOUND_RESPONSE = "Biller not found";
+
 	public static final String REGISTERED_BILLER_NOT_FOUND_REPONSE = "Registered biller not found";
 	
 	public static final String BILL_PAYMENT_SUCCESS_RESPONSE = "Bill paid successfully";
@@ -11,4 +13,6 @@ public interface SystemConstants {
 	public static final String PENDING_BILLS_SUCCESSFULLY_PAID_RESPONSE = "Pending bills successfullt paid";
 	
 	public static final String INSUFFICENT_BALANCE_RESPONSE = "Insufficient bank balance";
+	
+	public static final String USER_NOT_FOUND_RESPONSE = "User not found";
 }
