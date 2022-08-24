@@ -16,12 +16,16 @@ public class BillDTO {
     BillStatus status = BillStatus.PENDING;
     AccountDTO account;
 
-    public BillDTO(){
+    public BillDTO() {
 
     }
 
     public BillDTO(MasterBiller billerCode, String consumerNumber, double amount, LocalDate dueDate, BillStatus status) {
-    	
+    	 this.billerCode = billerCode;
+         this.consumerNumber = consumerNumber;
+         this.amount = amount;
+         this.dueDate = dueDate;
+         this.status = status;
     }
     
     public BillDTO(MasterBiller billerCode, String consumerNumber, double amount, LocalDate dueDate,Account account) {
