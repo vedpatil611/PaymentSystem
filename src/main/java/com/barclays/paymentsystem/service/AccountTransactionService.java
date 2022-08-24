@@ -6,7 +6,7 @@ import java.util.List;
 import com.barclays.paymentsystem.dto.AccountTransactionDTO;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 
-public interface ManagerControllerService {
+public interface AccountTransactionService {
 
 	List<AccountTransactionDTO> findAll(String username) throws PaymentSystemException;
 

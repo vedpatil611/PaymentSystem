@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.barclays.paymentsystem.dto.AccountTransactionDTO;
 import com.barclays.paymentsystem.entity.AccountTransaction;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
-import com.barclays.paymentsystem.service.ManagerControllerService;
+import com.barclays.paymentsystem.service.AccountTransactionService;
 
 @RestController
-public class ManagerController {
+public class AccountTransactionController {
 
 	@Autowired(required = false)
-	ManagerControllerService managerControllerService;
+	AccountTransactionService managerControllerService;
 
 	// get all account details
 	@GetMapping("/{username}/accountTransaction")

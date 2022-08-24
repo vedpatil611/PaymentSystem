@@ -1,6 +1,7 @@
 package com.barclays.paymentsystem.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
 import java.util.Optional;
@@ -10,13 +11,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.barclays.paymentsystem.constants.SystemConstants;
+import com.barclays.paymentsystem.dto.AccountTransactionDTO;
 import com.barclays.paymentsystem.entity.Account;
+import com.barclays.paymentsystem.entity.AccountTransaction;
 import com.barclays.paymentsystem.entity.BillStatus;
 import com.barclays.paymentsystem.entity.Bills;
 import com.barclays.paymentsystem.entity.RegisteredBiller;
+import com.barclays.paymentsystem.entity.TransactionType;
 import com.barclays.paymentsystem.entity.User;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 import com.barclays.paymentsystem.repository.AccountRepository;
+import com.barclays.paymentsystem.repository.AccountTransactionRepository;
 import com.barclays.paymentsystem.repository.BillRepository;
 import com.barclays.paymentsystem.repository.RegisteredBillerRespository;
 import com.barclays.paymentsystem.repository.UserRepository;
@@ -40,6 +45,9 @@ public class PaymentServiceImpl implements PaymentService {
 
 	@Autowired
 	AccountRepository accountRepository;
+	
+	@Autowired
+	AccountTransactionRepository accountTransactionRepository;
 	
 	@Autowired
 	UserRepository userRepository;
@@ -67,9 +75,9 @@ public class PaymentServiceImpl implements PaymentService {
 				if (!registeredBiller.getAutopay()) continue;
 				
 				if (registeredBiller.getAutopayLimit() == null) {
-					payBill(pendingBill);
+					payBill(pendingBill, "Auto paid bills");
 				} else if (registeredBiller.getAutopayLimit() != null && registeredBiller.getAutopayLimit() < pendingBill.getAmount()) {
-					payBill(pendingBill);
+					payBill(pendingBill, "Auto paid bills");
 				}
 			}
 		}
@@ -86,11 +94,10 @@ public class PaymentServiceImpl implements PaymentService {
 		User user = opt.get();
 		Bills bill = billRepository.findByAccountAndBillerCode_billerCode(user.getAccount(), billerCode);
 		
-		return payBill(bill);
+		return payBill(bill, "Manually paid bills");
 	}
 	
-	@Override
-	public String payBill(Bills bill) throws PaymentSystemException {
+	String payBill(Bills bill, String description) throws PaymentSystemException {
 		Account account = bill.getAccount();
 		Double billAmount = bill.getAmount();		
 		Double currentBalance = account.getCurrentBalance();
@@ -101,8 +108,9 @@ public class PaymentServiceImpl implements PaymentService {
 			
 			Bills newBill =  billRepository.save(bill);
 			Account newAccount = accountRepository.save(account);
+			AccountTransaction newTransaction = saveAccountTranscation(newBill, description);
 			
-			if (newBill != null && newAccount != null) {
+			if (newBill != null && newAccount != null && newTransaction != null) {
 				return SystemConstants.BILL_PAYMENT_SUCCESS_RESPONSE;
 				
 				// TODO: send mail here
@@ -112,5 +120,21 @@ public class PaymentServiceImpl implements PaymentService {
 		} else {
 			throw new PaymentSystemException(SystemConstants.INSUFFICENT_BALANCE_RESPONSE);
 		}
+	}
+	
+	AccountTransaction saveAccountTranscation(Bills bill, String description) {
+		AccountTransactionDTO accountTransactionDTO = new AccountTransactionDTO();
+		accountTransactionDTO.setTransactionReference(bill.getSequenceId());
+		accountTransactionDTO.setDateTime(LocalDateTime.now());
+		accountTransactionDTO.setAmount(bill.getAmount());
+		accountTransactionDTO.setDescription(description);
+		accountTransactionDTO.setType(TransactionType.CREDITED);
+		accountTransactionDTO.setRefNo(null);
+		
+		AccountTransaction accountTransaction = accountTransactionDTO.toEntity();
+		AccountTransaction newTransaction = accountTransactionRepository.save(accountTransaction);
+		newTransaction.setRefNo(bill);
+		newTransaction = accountTransactionRepository.save(newTransaction);
+		return newTransaction;
 	}
 }

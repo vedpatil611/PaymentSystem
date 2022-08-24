@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.barclays.paymentsystem.entity.Account;
 import com.barclays.paymentsystem.entity.AccountTransaction;
 
-public interface ManagerControllerRepository extends CrudRepository<AccountTransaction, Integer> {
+public interface AccountTransactionRepository extends CrudRepository<AccountTransaction, Integer> {
 
 	List<AccountTransaction> findAllByRefNo_account(Account account);
 

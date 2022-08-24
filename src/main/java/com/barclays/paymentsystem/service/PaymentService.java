@@ -31,5 +31,5 @@ public interface PaymentService {
 	 * @return Response string
 	 * @throws PaymentSystemException
 	 */
-	String payBill(Bills bill) throws PaymentSystemException;
+//	String payBill(Bills bill) throws PaymentSystemException;
 }
