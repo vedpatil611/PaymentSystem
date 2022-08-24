@@ -11,4 +11,6 @@ public interface SystemConstants {
 	public static final String PENDING_BILLS_SUCCESSFULLY_PAID_RESPONSE = "Pending bills successfullt paid";
 	
 	public static final String INSUFFICENT_BALANCE_RESPONSE = "Insufficient bank balance";
+	
+	public static final String USER_NOT_FOUND_RESPONSE = "User not found";
 }
