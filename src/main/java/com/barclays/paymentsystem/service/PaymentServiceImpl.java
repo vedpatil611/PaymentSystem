@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.barclays.paymentsystem.constants.SystemConstants;
 import com.barclays.paymentsystem.dto.AccountTransactionDTO;
+import com.barclays.paymentsystem.dto.BillDTO;
 import com.barclays.paymentsystem.entity.Account;
 import com.barclays.paymentsystem.entity.AccountTransaction;
 import com.barclays.paymentsystem.entity.BillStatus;
@@ -97,6 +98,13 @@ public class PaymentServiceImpl implements PaymentService {
 		return payBill(bill, "Manually paid bills");
 	}
 	
+	/**
+	 * Pay bill
+	 * @param bill
+	 * @param description
+	 * @return
+	 * @throws PaymentSystemException
+	 */
 	String payBill(Bills bill, String description) throws PaymentSystemException {
 		Account account = bill.getAccount();
 		Double billAmount = bill.getAmount();		
@@ -106,14 +114,18 @@ public class PaymentServiceImpl implements PaymentService {
 			account.setCurrentBalance(currentBalance - billAmount);
 			bill.setStatus(BillStatus.PAID);
 			
-			Bills newBill =  billRepository.save(bill);
+			Bills paidBill =  billRepository.save(bill);
 			Account newAccount = accountRepository.save(account);
-			AccountTransaction newTransaction = saveAccountTranscation(newBill, description);
+			AccountTransaction newTransaction = saveAccountTranscation(paidBill, description);
 			
-			if (newBill != null && newAccount != null && newTransaction != null) {
-				return SystemConstants.BILL_PAYMENT_SUCCESS_RESPONSE;
+			Bills nextBill = generateNextMonthBill(paidBill);
+			
+			if (paidBill != null && newAccount != null && newTransaction != null && nextBill != null) {
+				// TODO: send mail for paid bill here (paidBill)
+
+				// TODO: send mail for bill generated for next month (nextBill)
 				
-				// TODO: send mail here
+				return SystemConstants.BILL_PAYMENT_SUCCESS_RESPONSE;
 			} else {
 				throw new PaymentSystemException(SystemConstants.BILL_PAYMENT_FAILURE_RESPONSE);				
 			}
@@ -122,6 +134,28 @@ public class PaymentServiceImpl implements PaymentService {
 		}
 	}
 	
+	Bills generateNextMonthBill(Bills bill) throws PaymentSystemException {
+		BillDTO billDTO = new BillDTO(bill);
+		billDTO.setSequenceId(null);
+		billDTO.setDueDate(billDTO.getDueDate().plusMonths(1));
+		billDTO.setStatus(BillStatus.PENDING);
+		
+		Bills newBill = billDTO.toEntity();
+//		Account account = bill.getAccount();
+//		Account account = accountRepository.findById(bill.getAccount().getAccountNo()).get();
+		newBill.setAccount(bill.getAccount());
+		newBill = billRepository.save(newBill);
+//		newBill.setAccount(account);
+//		newBill = billRepository.save(newBill);
+		return newBill;
+	}
+	
+	/**
+	 * Save transaction history
+	 * @param bill
+	 * @param description
+	 * @return
+	 */
 	AccountTransaction saveAccountTranscation(Bills bill, String description) {
 		AccountTransactionDTO accountTransactionDTO = new AccountTransactionDTO();
 		accountTransactionDTO.setTransactionReference(bill.getSequenceId());

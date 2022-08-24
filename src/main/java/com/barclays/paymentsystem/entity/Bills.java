@@ -31,7 +31,7 @@ public class Bills {
 	BillStatus status = BillStatus.PENDING;
 
 	@ManyToOne
-	@JoinColumn(name = "account_no", unique = true)
+	@JoinColumn(name = "account_no", unique = false)
 	Account account;
 
 	public Account getAccount() {
