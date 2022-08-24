@@ -1,22 +1,32 @@
 package com.barclays.paymentsystem.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.util.List;
 
 @Entity
+@Table(name="users")
 public class User {
 	@Id
+	private Integer id;
 	String username;
 	String password;
+	private String name;
 	@OneToOne
 	@JoinColumn(name = "sequence_id", unique = true)
 	Account account;
-	@ManyToOne
-	@JoinColumn(name = "role_id", unique = true)
-	Role role;
+	@ManyToMany(cascade=CascadeType.MERGE)
+    @JoinTable(
+       name="user_role",
+       joinColumns={@JoinColumn(name="USER_ID", referencedColumnName="ID")},
+       inverseJoinColumns={@JoinColumn(name="ROLE_ID", referencedColumnName="ID")})
+    private List<Role> roles;
 
 	public String getUsername() {
 		return username;
@@ -42,12 +52,21 @@ public class User {
 		this.account = account;
 	}
 
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
+	   public List<Role> getRoles()
+	    {
+	        return roles;
+	    }
+	    public void setRoles(List<Role> roles)
+	    {
+	        this.roles = roles;
+	    }
+		public String getName()
+		{
+			return name;
+		}
+		public void setName(String name)
+		{
+			this.name = name;
+		}
 
 }

@@ -1,5 +1,5 @@
-use paymentdb;
-
+use bankapp;
+select * from account;
 insert into account values(1,1000000,500000.0,"riolu@gmail.com","Riolu");
 insert into account values(2,1000001,200000.0,"mienfoo@gmail.com","Mienfoo");
 insert into account values(3,1000002,400000.0,"machop@gmail.com","Machop");
