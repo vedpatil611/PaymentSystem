@@ -25,7 +25,7 @@ public class PaymentSystemExceptionController {
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorInfo> exceptionHandler(Exception exception) {
 		ErrorInfo error = new ErrorInfo();
-		error.setErrorMessage("Request cannot be processed");
+		error.setErrorMessage("Request cannot be processed: " + exception.getMessage());
 		error.setErrorCode(HttpStatus.ACCEPTED.value());
 		error.setTimestamp(LocalDateTime.now());
 		return new ResponseEntity<ErrorInfo>(error, HttpStatus.INTERNAL_SERVER_ERROR);
