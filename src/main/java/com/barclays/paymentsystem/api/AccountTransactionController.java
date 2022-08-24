@@ -34,21 +34,21 @@ public class AccountTransactionController {
 			throws PaymentSystemException {
 		return new ResponseEntity<>(managerControllerService.findAll(username), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/{username}/accountTransaction/download")
 	public void downloadAllAccountTransaction(@PathVariable String username, HttpServletResponse response)
 			throws PaymentSystemException {
-		
+
 		response.setContentType("application/octet-stream");
 		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
-        String currentDateTime = dateFormatter.format(new Date());
-         
-        String headerKey = "Content-Disposition";
-        String headerValue = "attachment; filename=users_" + currentDateTime + ".xlsx";
-        response.setHeader(headerKey, headerValue);
+		String currentDateTime = dateFormatter.format(new Date());
+
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=users_" + currentDateTime + ".xlsx";
+		response.setHeader(headerKey, headerValue);
 		TransactionExporter exporter = new TransactionExporter(managerControllerService.findAll(username));
 		try {
-			exporter.export(response);			
+			exporter.export(response);
 		} catch (Exception e) {
 			throw new PaymentSystemException(SystemConstants.FAILED_TO_EXPORT_EXCEL_RESPONSE);
 		}
@@ -58,9 +58,29 @@ public class AccountTransactionController {
 	public ResponseEntity<List<AccountTransactionDTO>> getAllAccountTransactionByStartDate(
 			@PathVariable String username, @RequestParam LocalDateTime startDate, @RequestParam LocalDateTime endDate)
 			throws PaymentSystemException {
-		
+
 		return new ResponseEntity<>(managerControllerService.findAllBetweenDate(username, startDate, endDate),
 				HttpStatus.OK);
 	}
 
+	@GetMapping("/{username}/accountTransactionBetween/download")
+	public void downloadAccountTransactionByStartDate(@PathVariable String username,
+			@RequestParam LocalDateTime startDate, @RequestParam LocalDateTime endDate, HttpServletResponse response)
+			throws PaymentSystemException {
+
+		response.setContentType("application/octet-stream");
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+		String currentDateTime = dateFormatter.format(new Date());
+
+		String headerKey = "Content-Disposition";
+		String headerValue = "attachment; filename=users_" + currentDateTime + ".xlsx";
+		response.setHeader(headerKey, headerValue);
+		TransactionExporter exporter = new TransactionExporter(
+				managerControllerService.findAllBetweenDate(username, startDate, endDate));
+		try {
+			exporter.export(response);
+		} catch (Exception e) {
+			throw new PaymentSystemException(SystemConstants.FAILED_TO_EXPORT_EXCEL_RESPONSE);
+		}
+	}
 }
