@@ -5,6 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean;
 
+/*
+   To print invoice of transaction
+  */
+
 @Configuration
 public class ApiConfig {
 
