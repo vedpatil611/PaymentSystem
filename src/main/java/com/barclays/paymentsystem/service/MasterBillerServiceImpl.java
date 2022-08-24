@@ -21,7 +21,7 @@ import com.barclays.paymentsystem.repository.MasterBillerRepository;
  */
 @Service
 @Transactional
-public class MasterBillerServiceImp implements MasterBillerService {
+public class MasterBillerServiceImpl implements MasterBillerService {
 	
 	@Autowired
 	MasterBillerRepository masterBillerRepository;

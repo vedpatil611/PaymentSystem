@@ -14,7 +14,7 @@ import com.barclays.paymentsystem.dto.BillDTO;
 import com.barclays.paymentsystem.dto.RegisteredBillerDTO;
 import com.barclays.paymentsystem.entity.Account;
 import com.barclays.paymentsystem.entity.BillStatus;
-import com.barclays.paymentsystem.entity.Bills;
+import com.barclays.paymentsystem.entity.Bill;
 import com.barclays.paymentsystem.entity.RegisteredBiller;
 import com.barclays.paymentsystem.entity.User;
 import com.barclays.paymentsystem.exception.PaymentSystemException;

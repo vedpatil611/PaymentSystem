@@ -20,7 +20,7 @@ import com.barclays.paymentsystem.repository.UserRepository;
 
 @Service
 @Transactional
-public class AccountTransactionServiceImp implements AccountTransactionService {
+public class AccountTransactionServiceImpl implements AccountTransactionService {
 
 	@Autowired
 	private AccountTransactionRepository managercontrollerRepository;
@@ -57,8 +57,7 @@ public class AccountTransactionServiceImp implements AccountTransactionService {
 		User user = opt.get();
 		Account account = user.getAccount();
 
-		List<AccountTransaction> list = managercontrollerRepository.findAllByRefNo_accountAndDateTimeBetween(account,
-				from, to);
+		List<AccountTransaction> list = managercontrollerRepository.findAllByRefNo_accountAndDateTimeBetween(account, from, to);
 		List<AccountTransactionDTO> transactionList = new ArrayList<>();
 
 		list.forEach(transaction -> transactionList.add(new AccountTransactionDTO(transaction)));

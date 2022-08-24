@@ -21,7 +21,7 @@ import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import com.barclays.paymentsystem.constants.SystemConstants;
 import com.barclays.paymentsystem.dto.BillDTO;
 import com.barclays.paymentsystem.entity.Account;
-import com.barclays.paymentsystem.entity.Bills;
+import com.barclays.paymentsystem.entity.Bill;
 import com.barclays.paymentsystem.entity.MasterBiller;
 import com.barclays.paymentsystem.entity.User;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
@@ -35,7 +35,7 @@ import freemarker.template.Template;
 
 @Service
 @Transactional
-public class BillServiceImp implements BillService {
+public class BillServiceImpl implements BillService {
 
 	@Autowired
 	BillRepository billRepository;
@@ -65,7 +65,7 @@ public class BillServiceImp implements BillService {
 		User user = opt.get();
 		Account account = user.getAccount();
 
-		List<Bills> list = billRepository.findByAccount(account);
+		List<Bill> list = billRepository.findByAccount(account);
 		List<BillDTO> transactionList = new ArrayList<>();
 		list.forEach(transaction -> transactionList.add(new BillDTO(transaction)));
 
@@ -83,7 +83,7 @@ public class BillServiceImp implements BillService {
 		User user = opt.get();
 		Account account = user.getAccount();
 
-		List<Bills> list = billRepository.findByAccountAndDueDateBetween(account, from, to);
+		List<Bill> list = billRepository.findByAccountAndDueDateBetween(account, from, to);
 		List<BillDTO> transactionList = new ArrayList<>();
 
 		list.forEach(transaction -> transactionList.add(new BillDTO(transaction)));
@@ -93,8 +93,8 @@ public class BillServiceImp implements BillService {
 	
 	@Override
     public String addNewBill(BillDTO billDTO) throws PaymentSystemException {
-        Bills bills = billDTO.toEntity();
-        Bills newBill= billRepository.save(bills);
+        Bill bills = billDTO.toEntity();
+        Bill newBill= billRepository.save(bills);
         
         MasterBiller biller = masterBillerRepository.findById(newBill.getBillerCode().getBillerCode()).get();
         

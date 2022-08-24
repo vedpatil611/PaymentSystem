@@ -21,7 +21,7 @@ public class AccountTransaction {
 	String description;
 	@OneToOne
 	@JoinColumn(name = "sequence_id", unique = true)
-	Bills refNo;
+	Bill refNo;
 
 	public Integer getSequenceId() {
 		return sequenceId;
@@ -71,11 +71,11 @@ public class AccountTransaction {
 		this.description = description;
 	}
 
-	public Bills getRefNo() {
+	public Bill getRefNo() {
 		return refNo;
 	}
 
-	public void setRefNo(Bills refNo) {
+	public void setRefNo(Bill refNo) {
 		this.refNo = refNo;
 	}
 }

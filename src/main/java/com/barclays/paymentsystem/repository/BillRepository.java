@@ -7,16 +7,16 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.barclays.paymentsystem.entity.Account;
 import com.barclays.paymentsystem.entity.BillStatus;
-import com.barclays.paymentsystem.entity.Bills;
+import com.barclays.paymentsystem.entity.Bill;
 
-public interface BillRepository extends CrudRepository<Bills, Integer> {
-	List<Bills> findBySequenceId(Integer sequenceId);
+public interface BillRepository extends CrudRepository<Bill, Integer> {
+	List<Bill> findBySequenceId(Integer sequenceId);
 
-	List<Bills> findByStatus(BillStatus status);
+	List<Bill> findByStatus(BillStatus status);
 	
-	Bills findByAccountAndBillerCode_billerCodeAndStatus(Account account, String billerCode, BillStatus status);
+	Bill findByAccountAndBillerCode_billerCodeAndStatus(Account account, String billerCode, BillStatus status);
 	
-	List<Bills> findByAccount(Account account);
+	List<Bill> findByAccount(Account account);
 	
-	List<Bills> findByAccountAndDueDateBetween(Account account, LocalDate from, LocalDate to);
+	List<Bill> findByAccountAndDueDateBetween(Account account, LocalDate from, LocalDate to);
 }

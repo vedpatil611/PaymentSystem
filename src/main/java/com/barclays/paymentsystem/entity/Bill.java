@@ -12,7 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Bills {
+public class Bill {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	Integer sequenceId;

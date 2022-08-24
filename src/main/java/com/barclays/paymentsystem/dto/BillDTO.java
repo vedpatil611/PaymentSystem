@@ -2,7 +2,7 @@ package com.barclays.paymentsystem.dto;
 
 import com.barclays.paymentsystem.entity.Account;
 import com.barclays.paymentsystem.entity.BillStatus;
-import com.barclays.paymentsystem.entity.Bills;
+import com.barclays.paymentsystem.entity.Bill;
 import com.barclays.paymentsystem.entity.MasterBiller;
 
 import java.time.LocalDate;
@@ -36,7 +36,7 @@ public class BillDTO {
         this.account= new AccountDTO(account);
     }
     
-    public BillDTO(Bills bill) {
+    public BillDTO(Bill bill) {
     	this.sequenceId = bill.getSequenceId();
     	this.billerCode = bill.getBillerCode();
     	this.consumerNumber = bill.getConsumerNumber();
@@ -46,8 +46,8 @@ public class BillDTO {
     	this.account = new AccountDTO(bill.getAccount());
     }
 
-    public Bills toEntity() {
-        Bills bills = new Bills();
+    public Bill toEntity() {
+        Bill bills = new Bill();
         bills.setBillerCode(billerCode);
         bills.setConsumerNumber(consumerNumber);
         bills.setAmount(amount);

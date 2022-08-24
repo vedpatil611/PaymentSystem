@@ -3,7 +3,7 @@ package com.barclays.paymentsystem.dto;
 import java.time.LocalDateTime;
 
 import com.barclays.paymentsystem.entity.AccountTransaction;
-import com.barclays.paymentsystem.entity.Bills;
+import com.barclays.paymentsystem.entity.Bill;
 import com.barclays.paymentsystem.entity.TransactionType;
 
 /**
@@ -18,7 +18,7 @@ public class AccountTransactionDTO {
 	Double amount;
 	TransactionType type;
 	String description;
-	Bills refNo;
+	Bill refNo;
 	
 	/**
 	 * Create new instance of AccountTransactionDTO
@@ -105,11 +105,11 @@ public class AccountTransactionDTO {
 		this.description = description;
 	}
 
-	public Bills getRefNo() {
+	public Bill getRefNo() {
 		return refNo;
 	}
 
-	public void setRefNo(Bills refNo) {
+	public void setRefNo(Bill refNo) {
 		this.refNo = refNo;
 	}
 }

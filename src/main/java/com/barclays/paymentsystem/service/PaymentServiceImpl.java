@@ -16,7 +16,7 @@ import com.barclays.paymentsystem.dto.BillDTO;
 import com.barclays.paymentsystem.entity.Account;
 import com.barclays.paymentsystem.entity.AccountTransaction;
 import com.barclays.paymentsystem.entity.BillStatus;
-import com.barclays.paymentsystem.entity.Bills;
+import com.barclays.paymentsystem.entity.Bill;
 import com.barclays.paymentsystem.entity.RegisteredBiller;
 import com.barclays.paymentsystem.entity.TransactionType;
 import com.barclays.paymentsystem.entity.User;
@@ -24,7 +24,7 @@ import com.barclays.paymentsystem.exception.PaymentSystemException;
 import com.barclays.paymentsystem.repository.AccountRepository;
 import com.barclays.paymentsystem.repository.AccountTransactionRepository;
 import com.barclays.paymentsystem.repository.BillRepository;
-import com.barclays.paymentsystem.repository.RegisteredBillerRespository;
+import com.barclays.paymentsystem.repository.RegisteredBillerRepository;
 import com.barclays.paymentsystem.repository.UserRepository;
 
 /**
@@ -42,7 +42,7 @@ public class PaymentServiceImpl implements PaymentService {
 	BillRepository billRepository;
 	
 	@Autowired
-	RegisteredBillerRespository registeredBillerRespository;
+	RegisteredBillerRepository registeredBillerRepository;
 
 	@Autowired
 	AccountRepository accountRepository;
@@ -55,16 +55,16 @@ public class PaymentServiceImpl implements PaymentService {
 	
 	@Override
 	public String autoPayBills() throws PaymentSystemException {
-		List<Bills> pendingBills = billRepository.findByStatus(BillStatus.PENDING);
+		List<Bill> pendingBills = billRepository.findByStatus(BillStatus.PENDING);
 
 		if (pendingBills.size() == 0) return SystemConstants.NO_PENDING_BILL_RESPONSE;
 		
-		for(Bills pendingBill : pendingBills) {
+		for(Bill pendingBill : pendingBills) {
 			LocalDate today = LocalDate.now();
 			Period dateDiff = Period.between(pendingBill.getDueDate(), today);
 			
 			if (dateDiff.getYears() == 0 && dateDiff.getMonths() == 0 && dateDiff.getDays() <= 3) {
-				RegisteredBiller registeredBiller = registeredBillerRespository.findByConsumerNumberAndBillerCodeAndAccount(
+				RegisteredBiller registeredBiller = registeredBillerRepository.findByConsumerNumberAndBillerCodeAndAccount(
 					pendingBill.getConsumerNumber(), 
 					pendingBill.getBillerCode(), 
 					pendingBill.getAccount()
@@ -93,7 +93,7 @@ public class PaymentServiceImpl implements PaymentService {
 			throw new PaymentSystemException(SystemConstants.USER_NOT_FOUND_RESPONSE);
 		
 		User user = opt.get();
-		Bills bill = billRepository.findByAccountAndBillerCode_billerCodeAndStatus(user.getAccount(), billerCode, BillStatus.PENDING);
+		Bill bill = billRepository.findByAccountAndBillerCode_billerCodeAndStatus(user.getAccount(), billerCode, BillStatus.PENDING);
 		
 		return payBill(bill, "Manually paid bills");
 	}
@@ -105,7 +105,7 @@ public class PaymentServiceImpl implements PaymentService {
 	 * @return
 	 * @throws PaymentSystemException
 	 */
-	String payBill(Bills bill, String description) throws PaymentSystemException {
+	String payBill(Bill bill, String description) throws PaymentSystemException {
 		Account account = bill.getAccount();
 		Double billAmount = bill.getAmount();		
 		Double currentBalance = account.getCurrentBalance();
@@ -114,11 +114,11 @@ public class PaymentServiceImpl implements PaymentService {
 			account.setCurrentBalance(currentBalance - billAmount);
 			bill.setStatus(BillStatus.PAID);
 			
-			Bills paidBill =  billRepository.save(bill);
+			Bill paidBill =  billRepository.save(bill);
 			Account newAccount = accountRepository.save(account);
 			AccountTransaction newTransaction = saveAccountTranscation(paidBill, description);
 			
-			Bills nextBill = generateNextMonthBill(paidBill);
+			Bill nextBill = generateNextMonthBill(paidBill);
 			
 			if (paidBill != null && newAccount != null && newTransaction != null && nextBill != null) {
 				// TODO: send mail for paid bill here (paidBill)
@@ -134,13 +134,13 @@ public class PaymentServiceImpl implements PaymentService {
 		}
 	}
 	
-	Bills generateNextMonthBill(Bills bill) throws PaymentSystemException {
+	Bill generateNextMonthBill(Bill bill) throws PaymentSystemException {
 		BillDTO billDTO = new BillDTO(bill);
 		billDTO.setSequenceId(null);
 		billDTO.setDueDate(billDTO.getDueDate().plusMonths(1));
 		billDTO.setStatus(BillStatus.PENDING);
 		
-		Bills newBill = billDTO.toEntity();
+		Bill newBill = billDTO.toEntity();
 		newBill.setAccount(bill.getAccount());
 		newBill = billRepository.save(newBill);
 
@@ -153,7 +153,7 @@ public class PaymentServiceImpl implements PaymentService {
 	 * @param description
 	 * @return
 	 */
-	AccountTransaction saveAccountTranscation(Bills bill, String description) {
+	AccountTransaction saveAccountTranscation(Bill bill, String description) {
 		AccountTransactionDTO accountTransactionDTO = new AccountTransactionDTO();
 		accountTransactionDTO.setTransactionReference(bill.getSequenceId());
 		accountTransactionDTO.setDateTime(LocalDateTime.now());

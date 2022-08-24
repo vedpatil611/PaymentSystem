@@ -23,8 +23,8 @@ insert into registered_biller values(4,180,false,null,143,"1000002","B001");
 insert into registered_biller values(5,300,true,null,153,"1000003","B002");
 insert into registered_biller values(6,null,true,3000,153,"1000004","B004");
 
-insert into bills(sequence_id, amount, consumer_number, due_date, status, account_no, biller_code) values (1, 100, 123, "2022-08-24", "PENDING", 1000000, "B001");
-insert into bills(sequence_id, amount, consumer_number, due_date, status, account_no, biller_code) values (2, 200, 133, "2022-08-24", "PENDING", 1000001, "B001");
+insert into bill(sequence_id, amount, consumer_number, due_date, status, account_no, biller_code) values (1, 100, 123, "2022-08-24", "PENDING", 1000000, "B001");
+insert into bill(sequence_id, amount, consumer_number, due_date, status, account_no, biller_code) values (2, 200, 133, "2022-08-24", "PENDING", 1000001, "B001");
 
 insert into `user` values("riolu", "lucario", 1000001, 2);
 insert into `user` values("vedangi","12312",1000004,2);
