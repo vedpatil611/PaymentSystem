@@ -1,5 +1,6 @@
 package com.barclays.paymentsystem.dto;
 
+import com.barclays.paymentsystem.entity.Account;
 import com.barclays.paymentsystem.entity.BillStatus;
 import com.barclays.paymentsystem.entity.Bills;
 import com.barclays.paymentsystem.entity.MasterBiller;
@@ -15,12 +16,17 @@ public class BillDTO {
     LocalDate dueDate;
     String status;
 
-    public BillDTO(MasterBiller billerCode, String consumerNumber, double amount, LocalDate dueDate, String status) {
+    Account account;
+
+    public BillDTO(){
+
+    }
+    public BillDTO(MasterBiller billerCode, String consumerNumber, double amount, LocalDate dueDate,Account account) {
         this.billerCode = billerCode;
         this.consumerNumber = consumerNumber;
         this.amount = amount;
         this.dueDate = dueDate;
-        this.status = status;
+        this.account=account;
     }
 
     public Bills toEntity() {
@@ -30,6 +36,7 @@ public class BillDTO {
         bills.setAmount(amount);
         bills.setDueDate(dueDate);
         bills.setStatus(BillStatus.PENDING);
+        bills.setAccount(account);
         return bills;
     }
 
@@ -79,5 +86,13 @@ public class BillDTO {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

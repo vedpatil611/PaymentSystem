@@ -8,10 +8,10 @@ import javax.persistence.Id;
 @Entity
 public class Account {
 
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	Integer sequenceId;
 	@Id
-	Integer accountNo;
+	String accountNo;
 	String name;
 	String emailId;
 	Double currentBalance;
@@ -24,11 +24,11 @@ public class Account {
 		this.sequenceId = sequenceId;
 	}
 	
-	public Integer getAccountNo() {
+	public String getAccountNo() {
 		return accountNo;
 	}
 	
-	public void setAccountNo(Integer accountNo) {
+	public void setAccountNo(String accountNo) {
 		this.accountNo = accountNo;
 	}
 	
