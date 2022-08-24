@@ -92,7 +92,7 @@ public class PaymentServiceImpl implements PaymentService {
 			throw new PaymentSystemException(SystemConstants.USER_NOT_FOUND_RESPONSE);
 		
 		User user = opt.get();
-		Bill bill = billRepository.findByAccountAndBillerCode_billerCodeAndStatus(user.getAccount(), billerCode, BillStatus.PENDING);
+		Bill bill = billRepository.findByAccountAndMasterBiller_billerCodeAndStatus(user.getAccount(), billerCode, BillStatus.PENDING);
 		
 		return payBill(bill, "Manually paid bills");
 	}
