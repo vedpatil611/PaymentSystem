@@ -2,18 +2,7 @@ package com.barclays.paymentsystem.entity;
 
 import java.time.LocalDate;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-enum BillStatus {
-	PAID, PENDING
-}
+import javax.persistence.*;
 
 @Entity
 public class Bills {
@@ -21,13 +10,25 @@ public class Bills {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	Integer sequenceId;
 	@ManyToOne
-	@JoinColumn(name = "biller_code")
+	@JoinColumn(name = "biller_code",unique = true)
 	MasterBiller billerCode;
+	
 	String consumerNumber;
 	Double amount;
 	LocalDate dueDate;
 	@Enumerated(value = EnumType.STRING)
 	BillStatus status;
+	@ManyToOne
+	@JoinColumn(name = "account_no",unique = true)
+	Account account;
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}
 
 	public Integer getSequenceId() {
 		return sequenceId;

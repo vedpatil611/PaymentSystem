@@ -18,7 +18,7 @@ public class RegisteredBillerDTO {
 	
 	public RegisteredBillerDTO(RegisteredBiller registeredBiller) {
 		super();
-		this.sequenceID = registeredBiller.getSequenceID();
+		//this.sequenceID = registeredBiller.getSequenceID();
 		this.billerCode = registeredBiller.getBillerCode();
 		this.consumerNumber = registeredBiller.getConsumerNumber();
 		this.account = registeredBiller.getAccount();
@@ -33,16 +33,14 @@ public class RegisteredBillerDTO {
 		registeredBiller.setAccount(account);
 		registeredBiller.setAutopay(autopay);
 		registeredBiller.setAutopayLimit(autopayLimit);
-		registeredBiller.setSequenceID(sequenceID);
+	//	registeredBiller.setSequenceID(sequenceID);
 		return registeredBiller;
 	}
 	
 	public Integer getSequenceID() {
 		return sequenceID;
 	}
-	public void setSequenceID(Integer sequenceID) {
-		this.sequenceID = sequenceID;
-	}
+
 	public MasterBiller getBillerCode() {
 		return billerCode;
 	}

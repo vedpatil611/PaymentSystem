@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class RegisteredBiller {
@@ -15,9 +16,10 @@ public class RegisteredBiller {
 	@ManyToOne
 	@JoinColumn(name = "biller_code", unique = true)
 	MasterBiller billerCode;
+	
 	String consumerNumber;
 	@ManyToOne
-	@JoinColumn(name = "account_number")
+	@JoinColumn(name = "account_no")
 	Account account;
 	Boolean autopay;
 	Double autopayLimit;

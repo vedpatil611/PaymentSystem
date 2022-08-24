@@ -1,43 +1,67 @@
 package com.barclays.paymentsystem.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.barclays.paymentsystem.dto.RegisteredBillerDTO;
-import com.barclays.paymentsystem.entity.MasterBiller;
+import com.barclays.paymentsystem.entity.Account;
 import com.barclays.paymentsystem.entity.RegisteredBiller;
-import com.barclays.paymentsystem.repository.MasterBillerRepository;
+import com.barclays.paymentsystem.entity.User;
+import com.barclays.paymentsystem.exception.PaymentSystemException;
 import com.barclays.paymentsystem.repository.RegisteredBillerRepository;
+import com.barclays.paymentsystem.repository.UserRepository;
 
-@Service(value="userService")
+@Service
+@Transactional
 public class UserServiceImpl implements UserService {
 	
-	//@Autowired 
-	//private UserRepository userRepo;
-	
-	
 	@Autowired 
-	private MasterBillerRepository masterRepo;
+	private UserRepository userRepo;
+	
+	
 	@Autowired
 	private RegisteredBillerRepository registeredBillerRepo;
 	
-	public List<MasterBiller> getAllBillers() {
+	@Override
+	public List<RegisteredBillerDTO> getAllSubscribedBillers(String userId) throws PaymentSystemException{
+		Optional<User> user= userRepo.findById(userId);
 		
-		return  (List<MasterBiller>) masterRepo.findAll();
+		if(!user.isPresent()) {
+			throw new PaymentSystemException("User Not Found");
+		}
+		
+		Account account = user.get().getAccount();
+		List<RegisteredBiller> list = registeredBillerRepo.findByAccount(account);
+		
+		List<RegisteredBillerDTO> list2 = new ArrayList<>();
+		for(RegisteredBiller rb: list) {
+			list2.add(new RegisteredBillerDTO (rb));
+		}
+			
+		
+		return  list2;
 	}
 	
-	public String subscribeNewBiller(RegisteredBillerDTO registeredBillerDTO,String billerCode) {
+	
+	@Override
+	public String subscribeNewBiller(RegisteredBillerDTO registeredBillerDTO) throws PaymentSystemException {
 		
 		
-		Optional<MasterBiller> masterBiller = MasterBillerRepository.findById(billerCode);
+		//Optional<MasterBiller> masterBiller = masterRepo.findById(billerCode);
 		
 		RegisteredBiller registerBiller=registeredBillerDTO.toRegisteredBillerEntity();
-		registerBiller.setBillerCode(masterBiller.get());
+		//registerBiller.setBillerCode(masterBiller.get());
+		RegisteredBiller newRegistered = registeredBillerRepo.save(registerBiller);
 		
-		registeredBillerRepo.save(registeredBillerDTO);
+		return newRegistered.getConsumerNumber();
+		
 	}
+
+
 	
 }

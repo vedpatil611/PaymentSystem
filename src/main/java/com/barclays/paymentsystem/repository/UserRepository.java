@@ -8,6 +8,6 @@ import com.barclays.paymentsystem.entity.User;
 
 
 @Repository
-public interface UserRepository extends CrudRepository<User,Integer>{
-
+public interface UserRepository extends CrudRepository<User,String>{
+	
 }
