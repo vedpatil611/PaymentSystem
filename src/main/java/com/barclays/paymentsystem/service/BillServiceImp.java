@@ -22,9 +22,12 @@ import com.barclays.paymentsystem.constants.SystemConstants;
 import com.barclays.paymentsystem.dto.BillDTO;
 import com.barclays.paymentsystem.entity.Account;
 import com.barclays.paymentsystem.entity.Bills;
+import com.barclays.paymentsystem.entity.MasterBiller;
 import com.barclays.paymentsystem.entity.User;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
+import com.barclays.paymentsystem.repository.AccountRepository;
 import com.barclays.paymentsystem.repository.BillRepository;
+import com.barclays.paymentsystem.repository.MasterBillerRepository;
 import com.barclays.paymentsystem.repository.UserRepository;
 
 import freemarker.template.Configuration;
@@ -39,6 +42,12 @@ public class BillServiceImp implements BillService {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	AccountRepository accountRepository;
+	
+	@Autowired
+	MasterBillerRepository masterBillerRepository;
 
     @Autowired
     private Configuration config;
@@ -86,16 +95,26 @@ public class BillServiceImp implements BillService {
     public String addNewBill(BillDTO billDTO) throws PaymentSystemException {
         Bills bills = billDTO.toEntity();
         Bills newBill= billRepository.save(bills);
+        
+        MasterBiller biller = masterBillerRepository.findById(newBill.getBillerCode().getBillerCode()).get();
+        
+        Optional<Account> opt = accountRepository.findById(newBill.getAccount().getAccountNo());
+        
+        if (!opt.isPresent())
+        	throw new PaymentSystemException(SystemConstants.BILL_PAYMENT_FAILURE_RESPONSE);
+        
+        Account account = opt.get();
+        
         Map<String, Object> model = new HashMap<>();
-        model.put("BillCode", newBill.getBillerCode().getBillerCode());
-        model.put("BillName", newBill.getBillerCode().getName());
+        model.put("BillCode", biller.getBillerCode());
+        model.put("BillName", biller.getName());
         model.put("ConsumerNumber", newBill.getConsumerNumber());
         model.put("Amount", newBill.getAmount());
         model.put("DueDate", newBill.getDueDate());
         model.put("Status", newBill.getStatus());
-        model.put("AccountNumber", newBill.getAccount().getAccountNo());
-        model.put("Name", newBill.getAccount().getName());
-        model.put("EmailID",newBill.getAccount().getEmailId());
+        model.put("AccountNumber", account.getAccountNo());
+        model.put("Name", account.getName());
+        model.put("EmailID",account.getEmailId());
         model.put("CreationDate", LocalDateTime.now().toString());
 
         sendEmail(model,"utils.ftl");
@@ -104,14 +123,14 @@ public class BillServiceImp implements BillService {
 
     private void sendEmail(Map<String, Object> model,String path){
         MimeMessage message = mailSender.createMimeMessage();
-        if(model.get("EmailID") !=null && (model.get("EmailID").toString()).length()>0){
+        if(model.get("EmailID") != null && (model.get("EmailID").toString()).length()>0){
             try{
                 MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
                         StandardCharsets.UTF_8.name());
                 Template t = config.getTemplate(path);
                 String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
 
-                helper.setFrom("aniruddha.babar273@gmail.com");
+                helper.setFrom("vedpatil611@gmail.com");
                 helper.setTo(model.get("EmailID").toString());
                 helper.setText(html,true);
                 helper.setSubject("Bill Payments - "+model.get("Name").toString());

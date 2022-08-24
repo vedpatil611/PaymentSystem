@@ -4,7 +4,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.barclays.paymentsystem.entity.Account;
 
-public interface AccountRepository extends CrudRepository<Account, Integer> {
+public interface AccountRepository extends CrudRepository<Account, String> {
 
 
 }
