@@ -16,10 +16,6 @@ import com.barclays.paymentsystem.entity.User;
 import com.barclays.paymentsystem.repository.UserRepository;
 
 
-/**
- * @author Ramesh Fadatare
- *
- */
 @Service
 @Transactional
 public class CustomUserDetailsService implements UserDetailsService {

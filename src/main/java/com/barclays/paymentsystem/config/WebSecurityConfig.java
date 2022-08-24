@@ -1,6 +1,6 @@
 package com.barclays.paymentsystem.config;
 
-import javax.activation.DataSource;
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -75,8 +75,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
     
     PersistentTokenRepository persistentTokenRepository(){
-     JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
-     tokenRepositoryImpl.setDataSource((javax.sql.DataSource) dataSource);
-     return tokenRepositoryImpl;
+    	JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
+    	tokenRepositoryImpl.setDataSource(dataSource);
+    	return tokenRepositoryImpl;
     }
 }
