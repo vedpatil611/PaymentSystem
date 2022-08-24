@@ -9,14 +9,14 @@ import javax.persistence.OneToOne;
 @Entity
 public class User {
 	@Id
+	private Integer id;
 	String username;
 	String password;
 	@OneToOne
 	@JoinColumn(name = "account_no", unique = true)
 	Account account;
-	@ManyToOne
-	@JoinColumn(name = "role_id", unique = false)
-	Role role;
+	
+	private String role;
 
 	public String getUsername() {
 		return username;
@@ -34,6 +34,14 @@ public class User {
 		this.password = password;
 	}
 
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
+	public String getRole() {
+		return role;
+	}
+
 	public Account getAccount() {
 		return account;
 	}
@@ -41,13 +49,19 @@ public class User {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
+	public User(String username ,String password,String role,Account account) {
+		// TODO Auto-generated constructor stub
+		this.password = password;
+		this.username = username;
+		this.account=account;
 		this.role = role;
 	}
+
+	public User() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+	
 
 }
