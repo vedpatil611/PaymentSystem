@@ -25,4 +25,6 @@ insert into registered_biller values(5,true,null,153,1000003,"B002");
 insert into bills(sequence_id, amount, consumer_number, due_date, status, account_no, biller_code) values (1, 100, 123, "2022-08-24", "PENDING", 1000000, "B001");
 insert into bills(sequence_id, amount, consumer_number, due_date, status, account_no, biller_code) values (2, 200, 133, "2022-08-24", "PENDING", 1000001, "B001");
 
+insert into `user` values("riolu", "lucario", 1000001, 2);
+
 commit;

@@ -10,7 +10,7 @@ import javax.persistence.Id;
 @Entity
 public class Account {
 
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	Integer sequenceId;
 	@Id
 	String accountNo;

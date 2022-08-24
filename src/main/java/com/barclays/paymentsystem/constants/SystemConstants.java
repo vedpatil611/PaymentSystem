@@ -15,4 +15,6 @@ public interface SystemConstants {
 	public static final String INSUFFICENT_BALANCE_RESPONSE = "Insufficient bank balance";
 	
 	public static final String USER_NOT_FOUND_RESPONSE = "User not found";
+	
+	public static final String FAILED_TO_EXPORT_EXCEL_RESPONSE = "Failed to export excel";
 }

@@ -12,7 +12,7 @@ public class User {
 	String username;
 	String password;
 	@OneToOne
-	@JoinColumn(name = "sequence_id", unique = true)
+	@JoinColumn(name = "account_no", unique = true)
 	Account account;
 	@ManyToOne
 	@JoinColumn(name = "role_id", unique = true)
