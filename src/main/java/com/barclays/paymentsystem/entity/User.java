@@ -15,7 +15,7 @@ public class User {
 	@JoinColumn(name = "account_no", unique = true)
 	Account account;
 	@ManyToOne
-	@JoinColumn(name = "role_id", unique = true)
+	@JoinColumn(name = "role_id", unique = false)
 	Role role;
 
 	public String getUsername() {

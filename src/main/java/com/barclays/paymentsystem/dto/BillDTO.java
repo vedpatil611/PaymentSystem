@@ -19,7 +19,7 @@ public class BillDTO {
     public BillDTO() {
 
     }
-
+    
     public BillDTO(MasterBiller billerCode, String consumerNumber, double amount, LocalDate dueDate, BillStatus status) {
     	 this.billerCode = billerCode;
          this.consumerNumber = consumerNumber;

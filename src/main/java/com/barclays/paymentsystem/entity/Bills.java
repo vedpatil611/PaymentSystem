@@ -18,7 +18,7 @@ public class Bills {
 	Integer sequenceId;
 
 	@ManyToOne
-	@JoinColumn(name = "biller_code")
+	@JoinColumn(name = "biller_code",unique = false)
 	MasterBiller billerCode;
 
 	String consumerNumber;
