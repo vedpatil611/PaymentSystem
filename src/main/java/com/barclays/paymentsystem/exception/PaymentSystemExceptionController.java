@@ -11,7 +11,7 @@ import com.barclays.paymentsystem.utils.ErrorInfo;
 
 /**
  * PaymentSystemExceptionController - Rest exception handler
- * @author Ved
+ * @author PB3C
  *
  */
 @RestControllerAdvice

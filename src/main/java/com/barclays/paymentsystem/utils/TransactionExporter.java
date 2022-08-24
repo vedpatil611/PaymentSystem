@@ -15,6 +15,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.barclays.paymentsystem.dto.AccountTransactionDTO;
 
+/**
+ * TransactionExporter - Exporting Transactions into CSV File
+ * @author PB3C
+ *
+ */
 public class TransactionExporter {
 	private XSSFWorkbook workbook;
 	private XSSFSheet sheet;
@@ -24,7 +29,10 @@ public class TransactionExporter {
 		this.transactionList = transactionList;
 		workbook = new XSSFWorkbook();
 	}
-
+	/**
+	 * To create sheet and write Headers
+	 * @writeHeaderLine
+	 */
 	private void writeHeaderLine() {
 		sheet = workbook.createSheet("Users");
 
@@ -43,7 +51,14 @@ public class TransactionExporter {
 		createCell(row, 4, "Description", style);
 		createCell(row, 5, "Bill Ref No", style);
 	}
-
+	/**
+	 * @createCell
+	 * @param row
+	 * @param columnCount
+	 * @param value
+	 * @param style
+	 * @return null
+	 */
 	private void createCell(Row row, int columnCount, Object value, CellStyle style) {
 		sheet.autoSizeColumn(columnCount);
 		Cell cell = row.createCell(columnCount);
@@ -56,7 +71,10 @@ public class TransactionExporter {
 		}
 		cell.setCellStyle(style);
 	}
-
+	/**
+	 * @writeDatalines
+	 * @param null
+	 */
 	private void writeDataLines() {
 		int rowCount = 1;
 
@@ -77,7 +95,11 @@ public class TransactionExporter {
 			createCell(row, columnCount++, transaction.getRefNo().getSequenceId(), style);
 		}
 	}
-
+	/**
+	 * @export
+	 * @param null
+	 * @throws IOException
+	 */
 	public void export(HttpServletResponse response) throws IOException {
 		writeHeaderLine();
 		writeDataLines();

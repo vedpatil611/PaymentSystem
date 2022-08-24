@@ -8,7 +8,7 @@ import com.barclays.paymentsystem.entity.TransactionType;
 
 /**
  * AccountTransactionDTO - AccountTransaction Data Transfer Object
- * @author Ved
+ * @author PB3C
  *
  */
 public class AccountTransactionDTO {

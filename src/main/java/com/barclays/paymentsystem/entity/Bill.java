@@ -10,7 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
+/**
+ * Bill - Bill Entity mapped to Bill table in database
+ * @author PB3C
+ *
+ */
 @Entity
 public class Bill {
 	@Id

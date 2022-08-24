@@ -1,17 +1,25 @@
 package com.barclays.paymentsystem.dto;
 
 import com.barclays.paymentsystem.entity.Account;
-
+/**
+ * AccountDTO - Account Data Transfer Object
+ * @author PB3C
+ */
 public class AccountDTO {
 	Integer sequenceId;
 	String accountNo;
 	String name;
 	String emailId;
 	Double currentBalance;
-
+	/**
+	 * Create new instance of AccountTransactionDTO
+	 */
 	public AccountDTO() {
 	}
-
+	/**
+	 * Create new AccountDTO instance from Account entity
+	 * @param account - Account entity
+	 */
 	public AccountDTO(Account account) {
 		sequenceId = account.getSequenceId();
 		accountNo = account.getAccountNo();
@@ -19,7 +27,10 @@ public class AccountDTO {
 		emailId = account.getEmailId();
 		currentBalance = account.getCurrentBalance();
 	}
-
+	/**
+	 * Convert AccountDTO to Account entity
+	 * @return Account entity
+	 */
 	public Account toEntity() {
 		Account account = new Account();
 		account.setSequenceId(sequenceId);

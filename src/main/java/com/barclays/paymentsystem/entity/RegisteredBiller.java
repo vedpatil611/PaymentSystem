@@ -6,7 +6,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
+/**
+ * RegisteredBiller - RegisteredBiller Entity mapped to RegisteredBiller table in database
+ * @author PB3C
+ *
+ */
 @Entity
 public class RegisteredBiller {
 	@Id

@@ -6,12 +6,20 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+/**
+ * Defining RoleName as Manager or Account
+ * @author PB3C
+ *
+ */
 enum RoleName {
 	MANAGER,
 	ACCOUNT
 }
-
+/**
+ * Role - Role Entity mapped to Role table in database
+ * @author PB3C
+ *
+ */
 @Entity
 public class Role {
 	@Id

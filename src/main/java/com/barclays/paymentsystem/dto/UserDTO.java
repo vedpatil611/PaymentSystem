@@ -1,5 +1,9 @@
 package com.barclays.paymentsystem.dto;
-
+/**
+ * UserBillerDTO - UserBiller Data Transfer Object
+ * @author PB3C
+ *
+ */
 import com.barclays.paymentsystem.entity.Account;
 import com.barclays.paymentsystem.entity.Role;
 import com.barclays.paymentsystem.entity.User;
@@ -9,10 +13,16 @@ public class UserDTO {
 	String password;
 	Account account;
 	Role role;
-	
+	/**
+	 * Create new UserDTO instance
+	 */
 	public UserDTO() {
 		
 	}
+	/**
+	 * Create new UserDTO instance from User entity
+	 * @param user - User entity
+	 */
 	
 	public UserDTO(User user) {
 		super();
@@ -21,7 +31,10 @@ public class UserDTO {
 		this.account = user.getAccount();
 		this.role = user.getRole();
 	}
-
+	/**
+	 * Convert UserDTO to User entity
+	 * @return User entity
+	 */
 	public User toUserEntity() {
 		User user = new User();
 		

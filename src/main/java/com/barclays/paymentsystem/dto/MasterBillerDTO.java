@@ -4,7 +4,7 @@ import com.barclays.paymentsystem.entity.MasterBiller;
 
 /**
  * MasterBillerDTO - MasterBiller Data Transfer Object
- * @author Ved
+ * @author PB3C
  *
  */
 public class MasterBillerDTO {

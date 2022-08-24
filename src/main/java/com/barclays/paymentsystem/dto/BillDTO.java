@@ -6,7 +6,11 @@ import com.barclays.paymentsystem.entity.Bill;
 import com.barclays.paymentsystem.entity.MasterBiller;
 
 import java.time.LocalDate;
-
+/**
+ * BillDTO - Bill Data Transfer Object
+ * @author PB3C
+ *
+ */
 public class BillDTO {
     Integer sequenceId;
     MasterBiller billerCode;
@@ -15,7 +19,9 @@ public class BillDTO {
     LocalDate dueDate;
     BillStatus status = BillStatus.PENDING;
     AccountDTO account;
-
+    /**
+	 * Create new BillDTO instance
+	 */
     public BillDTO() {
 
     }
@@ -35,7 +41,10 @@ public class BillDTO {
         this.dueDate = dueDate;
         this.account= new AccountDTO(account);
     }
-    
+    /**
+	 * Create new BillDTO instance from Bill entity
+	 * @param bill - Bill entity
+	 */
     public BillDTO(Bill bill) {
     	this.sequenceId = bill.getSequenceId();
     	this.billerCode = bill.getMasterBiller();
@@ -45,7 +54,10 @@ public class BillDTO {
     	this.status = bill.getStatus();
     	this.account = new AccountDTO(bill.getAccount());
     }
-
+    /**
+	 * Convert BillDTO to Bill entity
+	 * @return Bill entity
+	 */
     public Bill toEntity() {
         Bill bills = new Bill();
         bills.setMasterBiller(billerCode);
