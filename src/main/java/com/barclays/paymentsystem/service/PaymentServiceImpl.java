@@ -28,9 +28,9 @@ import com.barclays.paymentsystem.repository.RegisteredBillerRepository;
 import com.barclays.paymentsystem.repository.UserRepository;
 
 /**
- * AutoPayBillServiceImpl - AutoPayBillService implementation class
+ * PaymentServiceImpl - PaymentService implementation class
  * 
- * @author Ved
+ * @author PB3C
  *
  */
 @Service(value = "autoPayBillService")
@@ -51,6 +51,13 @@ public class PaymentServiceImpl implements PaymentService {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	/**
+	 * @autoPayBills
+	 * @param null
+	 * @return response of pending bills paid successfully
+	 * @throws PaymentSystemException
+	 */
 	
 	@Override
 	public String autoPayBills() throws PaymentSystemException {
@@ -84,6 +91,14 @@ public class PaymentServiceImpl implements PaymentService {
 		
 		return SystemConstants.PENDING_BILLS_SUCCESSFULLY_PAID_RESPONSE;
 	}
+	
+	/**
+	 * @manuallyPayBill
+	 * @param username
+	 * @param billerCode
+	 * @return Manually bill payment
+	 * @throws PaymentSystemException
+	 */
 
 	@Override
 	public String manuallyPayBill(String username, String billerCode) throws PaymentSystemException {
@@ -132,6 +147,13 @@ public class PaymentServiceImpl implements PaymentService {
 			throw new PaymentSystemException(SystemConstants.INSUFFICENT_BALANCE_RESPONSE);
 		}
 	}
+	
+	/**
+	 * @generateNextMonthBill
+	 * @param bill
+	 * @return new bill of next month
+	 * @throws PaymentSystemException
+	 */
 	
 	Bill generateNextMonthBill(Bill bill) throws PaymentSystemException {
 		BillDTO billDTO = new BillDTO(bill);

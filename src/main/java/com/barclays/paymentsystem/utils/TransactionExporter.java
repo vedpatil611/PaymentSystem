@@ -14,6 +14,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.barclays.paymentsystem.dto.AccountTransactionDTO;
+import com.barclays.paymentsystem.exception.PaymentSystemException;
 
 /**
  * TransactionExporter - Exporting Transactions into CSV File
@@ -75,6 +76,11 @@ public class TransactionExporter {
 		}
 		cell.setCellStyle(style);
 	}
+	
+	/**
+	 * @writeDatalines
+	 * @param null
+	 */
 
 	/**
 	 * @writeDatalines
@@ -100,6 +106,12 @@ public class TransactionExporter {
 			createCell(row, columnCount++, transaction.getRefNo().getSequenceId(), style);
 		}
 	}
+	
+	/**
+	 * @export
+	 * @param null
+	 * @throws IOException
+	 */
 
 	/**
 	 * @export

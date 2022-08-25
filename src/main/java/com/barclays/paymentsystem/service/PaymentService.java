@@ -5,7 +5,8 @@ import com.barclays.paymentsystem.exception.PaymentSystemException;
 /**
  * PaymentService - Payment service
  * 
- * @author Ved
+ * PaymentService - Payment service interface
+ * @author Ved, Vinay
  *
  */
 public interface PaymentService {
