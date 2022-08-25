@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 /**
  * ErrorInfo - Error info for cleaner error display
+ * 
  * @author Ved
  *
  */

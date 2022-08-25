@@ -15,44 +15,43 @@ import com.barclays.paymentsystem.dto.RegisteredBillerDTO;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 import com.barclays.paymentsystem.service.UserService;
 
-/*
+/**
  * UserController - Rest api for User details
  */
-
 @RestController
 public class UserController {
-	
-	@Autowired 
+
+	@Autowired
 	private UserService userservice;
-	
+
 	/**
 	 * getBillers - Get list of subscribed billers by user
-	 * @param username 
+	 * 
+	 * @param username
 	 * @return List of subscribed billers
 	 * @throws PaymentSystemException
 	 */
-
-
 	@GetMapping("/users/{username}/allsubscriptions")
-	public List<RegisteredBillerDTO> getBillers(@PathVariable(name = "username") String username) throws PaymentSystemException{
-		//List<MasterBillerDTO> list = masterBillerService.getAllMasterBiller();
-		//return new ResponseEntity<>(list, HttpStatus.OK);
+	public List<RegisteredBillerDTO> getBillers(@PathVariable(name = "username") String username)
+			throws PaymentSystemException {
+		// List<MasterBillerDTO> list = masterBillerService.getAllMasterBiller();
+		// return new ResponseEntity<>(list, HttpStatus.OK);
 		return userservice.getAllSubscribedBillers(username);
-		//return biller;
+		// return biller;
 	}
-	
+
 	/**
 	 * subscribeNewBiller - Subscribe to new biller
+	 * 
 	 * @param username
 	 * @return New Biller Code
 	 * @throws PaymentSystemException
 	 */
-
 	@PostMapping("/users/{username}/subscribe")
-	public ResponseEntity<String> subscribeNewBiller(@PathVariable String username, @RequestBody RegisteredBillerDTO biller) throws PaymentSystemException{
+	public ResponseEntity<String> subscribeNewBiller(@PathVariable String username,
+			@RequestBody RegisteredBillerDTO biller) throws PaymentSystemException {
 		String newCode = userservice.subscribeNewBiller(username, biller);
 		return new ResponseEntity<>(newCode, HttpStatus.OK);
 	}
-	
-	
+
 }

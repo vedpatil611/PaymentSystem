@@ -16,13 +16,14 @@ import com.barclays.paymentsystem.repository.MasterBillerRepository;
 
 /**
  * MasterBillerServiceImp - MasterBillerService implementation class
+ * 
  * @author Ved
  *
  */
 @Service
 @Transactional
 public class MasterBillerServiceImpl implements MasterBillerService {
-	
+
 	@Autowired
 	MasterBillerRepository masterBillerRepository;
 
@@ -30,7 +31,7 @@ public class MasterBillerServiceImpl implements MasterBillerService {
 	public List<MasterBillerDTO> getAllMasterBiller() throws PaymentSystemException {
 		Iterable<MasterBiller> list = masterBillerRepository.findAll();
 		List<MasterBillerDTO> billerList = new ArrayList<>();
-		
+
 		list.forEach(biller -> billerList.add(new MasterBillerDTO(biller)));
 		return billerList;
 	}
@@ -40,7 +41,7 @@ public class MasterBillerServiceImpl implements MasterBillerService {
 		Optional<MasterBiller> opt = masterBillerRepository.findById(billerCode);
 		if (!opt.isPresent())
 			throw new PaymentSystemException(SystemConstants.BILLER_NOT_FOUND_RESPONSE);
-		
+
 		return new MasterBillerDTO(opt.get());
 	}
 
@@ -50,5 +51,5 @@ public class MasterBillerServiceImpl implements MasterBillerService {
 		MasterBiller newBiller = masterBillerRepository.save(masterBiller);
 		return newBiller.getBillerCode();
 	}
-	
+
 }

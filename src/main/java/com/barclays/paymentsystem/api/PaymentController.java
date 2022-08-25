@@ -14,7 +14,6 @@ import com.barclays.paymentsystem.service.PaymentService;
  * PaymentlController - Rest api for payment
    @author - P3BC
  */
-
 @RestController
 public class PaymentController {
 	
@@ -28,7 +27,6 @@ public class PaymentController {
 	 * @return Manual bill pay
 	 * @throws PaymentSystemException
 	 */
-	
 	@PostMapping("/user/{username}/paybill/{billerCode}")
 	public ResponseEntity<String> manuallyPayBill(@PathVariable String username, @PathVariable String billerCode) throws PaymentSystemException {
 		return new ResponseEntity<>(paymentService.manuallyPayBill(username, billerCode), HttpStatus.OK);

@@ -2,6 +2,7 @@ package com.barclays.paymentsystem.exception;
 
 /**
  * PaymentSystemException - Custom exception
+ * 
  * @author PB3C
  *
  */

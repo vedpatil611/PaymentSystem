@@ -1,10 +1,9 @@
 package com.barclays.paymentsystem.constants;
 
 /*
- * static variables initialisation
-   @author PB3C
+ * SystemConstants - static variables initialization
+ * @author PB3C
  */
-
 public interface SystemConstants {
 	public static final String ACCOUNT_NOT_FOUND_RESPONSE = "Account not found";
 	

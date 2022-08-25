@@ -4,8 +4,11 @@ import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+
 /**
  * MasterBiller - MasterBiller Entity mapped to MasterBiller table in database
+ * 
  * @author PB3C
  *
  */

@@ -7,25 +7,29 @@ import com.barclays.paymentsystem.exception.PaymentSystemException;
 
 /**
  * MasterBillerService - MasterBiller table service
+ * 
  * @author Ved
  *
  */
 public interface MasterBillerService {
 	/**
 	 * getAllMasterBiller - get list of all available biller
+	 * 
 	 * @return list of master billers
 	 */
 	List<MasterBillerDTO> getAllMasterBiller() throws PaymentSystemException;
-	
+
 	/**
 	 * getMasterBiller - Get Master Biller by biller code
+	 * 
 	 * @param billerCode - unique biller code
 	 * @return Master biller data
 	 */
 	MasterBillerDTO getMasterBiller(String billerCode) throws PaymentSystemException;
-	
+
 	/**
 	 * Create a new master biller
+	 * 
 	 * @param masterBillerDTO - Data for new master biller
 	 * @return Id of newly created master biller
 	 */

@@ -1,8 +1,10 @@
 package com.barclays.paymentsystem.dto;
 
 import com.barclays.paymentsystem.entity.Account;
+
 /**
  * AccountDTO - Account Data Transfer Object
+ * 
  * @author PB3C
  */
 public class AccountDTO {
@@ -11,13 +13,16 @@ public class AccountDTO {
 	String name;
 	String emailId;
 	Double currentBalance;
+
 	/**
 	 * Create new instance of AccountTransactionDTO
 	 */
 	public AccountDTO() {
 	}
+
 	/**
 	 * Create new AccountDTO instance from Account entity
+	 * 
 	 * @param account - Account entity
 	 */
 	public AccountDTO(Account account) {
@@ -27,8 +32,10 @@ public class AccountDTO {
 		emailId = account.getEmailId();
 		currentBalance = account.getCurrentBalance();
 	}
+
 	/**
 	 * Convert AccountDTO to Account entity
+	 * 
 	 * @return Account entity
 	 */
 	public Account toEntity() {

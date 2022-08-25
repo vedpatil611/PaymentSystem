@@ -8,6 +8,7 @@ import com.barclays.paymentsystem.entity.TransactionType;
 
 /**
  * AccountTransactionDTO - AccountTransaction Data Transfer Object
+ * 
  * @author PB3C
  *
  */
@@ -19,7 +20,7 @@ public class AccountTransactionDTO {
 	TransactionType type;
 	String description;
 	Bill refNo;
-	
+
 	/**
 	 * Create new instance of AccountTransactionDTO
 	 */
@@ -29,6 +30,7 @@ public class AccountTransactionDTO {
 
 	/**
 	 * Create new instance of AccountTransactionDTO from AccountTransaction
+	 * 
 	 * @param accountTransaction
 	 */
 	public AccountTransactionDTO(AccountTransaction accountTransaction) {
@@ -40,9 +42,10 @@ public class AccountTransactionDTO {
 		this.description = accountTransaction.getDescription();
 		this.refNo = accountTransaction.getRefNo();
 	}
-	
+
 	/**
 	 * Convert AccountTransactionDTO to AccountTransaction entity
+	 * 
 	 * @return
 	 */
 	public AccountTransaction toEntity() {
@@ -56,7 +59,7 @@ public class AccountTransactionDTO {
 		accountTransaction.setRefNo(refNo);
 		return accountTransaction;
 	}
-	
+
 	public Integer getSequenceId() {
 		return sequenceId;
 	}

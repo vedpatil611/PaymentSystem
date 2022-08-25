@@ -3,8 +3,10 @@ package com.barclays.paymentsystem.dto;
 import com.barclays.paymentsystem.entity.Account;
 import com.barclays.paymentsystem.entity.MasterBiller;
 import com.barclays.paymentsystem.entity.RegisteredBiller;
+
 /**
  * RegisteredBillerDTO - RegisteredBiller Data Transfer Object
+ * 
  * @author PB3C
  *
  */
@@ -16,14 +18,17 @@ public class RegisteredBillerDTO {
 	Boolean autopay;
 	Double amount;
 	Double autopayLimit;
+
 	/**
 	 * Create new RegisteredBillerDTO instance
 	 */
 	public RegisteredBillerDTO() {
 
 	}
+
 	/**
 	 * Create new RegisteredBillerDTO instance from RegisteredBiller entity
+	 * 
 	 * @param registeredrBiller - RegisteredBiller entity
 	 */
 	public RegisteredBillerDTO(RegisteredBiller registeredBiller) {
@@ -36,8 +41,10 @@ public class RegisteredBillerDTO {
 		this.autopayLimit = registeredBiller.getAutopayLimit();
 		this.amount = registeredBiller.getAmount();
 	}
+
 	/**
 	 * Convert RegisteredBillerDTO to RegisteredBiller entity
+	 * 
 	 * @return RegisteredBiller entity
 	 */
 	public RegisteredBiller toRegisteredBillerEntity() {

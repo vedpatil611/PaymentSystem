@@ -20,7 +20,6 @@ import com.barclays.paymentsystem.service.BillService;
 /*
  * BillController - Rest api for Bill details
  */
-
 @RestController
 public class BillsController {
 
@@ -33,7 +32,6 @@ public class BillsController {
 	 * @return New Biller Code
 	 * @throws PaymentSystemException
 	 */
-
 	@PostMapping("/bill/new")
 	public ResponseEntity<String> addNewBill(@RequestBody BillDTO billDTO) throws PaymentSystemException {
 		String newCode = billService.addNewBill(billDTO);
@@ -46,7 +44,6 @@ public class BillsController {
 	 * @return bills
 	 * @throws PaymentSystemException
 	 */
-	
 	@GetMapping("/user/{username}/bills")
 	public ResponseEntity<List<BillDTO>> getBills(@PathVariable String username,
 			@RequestParam(required = false) LocalDate from, 

@@ -10,8 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
+
 /**
  * Bill - Bill Entity mapped to Bill table in database
+ * 
  * @author PB3C
  *
  */
@@ -22,7 +25,7 @@ public class Bill {
 	Integer sequenceId;
 
 	@ManyToOne
-	@JoinColumn(name = "biller_code",unique = false)
+	@JoinColumn(name = "biller_code", unique = false)
 	MasterBiller masterBiller;
 
 	String consumerNumber;

@@ -5,8 +5,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+
+
 /**
  * User - User Entity mapped to User table in database
+ * 
  * @author PB3C
  *
  */
