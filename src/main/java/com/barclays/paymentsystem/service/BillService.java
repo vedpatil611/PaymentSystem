@@ -12,4 +12,6 @@ public interface BillService {
 	List<BillDTO> findAll(String billerCode) throws PaymentSystemException;
 
 	public List<BillDTO> findAllBetweenDate(String username, LocalDate from, LocalDate to) throws PaymentSystemException;
+
+	List<BillDTO> getAllBills() throws PaymentSystemException;
 }

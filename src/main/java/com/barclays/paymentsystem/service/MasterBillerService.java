@@ -2,6 +2,7 @@ package com.barclays.paymentsystem.service;
 
 import java.util.List;
 
+import com.barclays.paymentsystem.dto.AccountDTO;
 import com.barclays.paymentsystem.dto.MasterBillerDTO;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 
@@ -16,7 +17,8 @@ public interface MasterBillerService {
 	 * @return list of master billers
 	 */
 	List<MasterBillerDTO> getAllMasterBiller() throws PaymentSystemException;
-	
+
+	List<AccountDTO> getAllAccount() throws PaymentSystemException;
 	/**
 	 * getMasterBiller - Get Master Biller by biller code
 	 * @param billerCode - unique biller code

@@ -14,7 +14,7 @@ public class BillDTO {
     double amount;
     LocalDate dueDate;
     BillStatus status = BillStatus.PENDING;
-    AccountDTO account;
+    Account account;
 
     public BillDTO() {
 
@@ -33,7 +33,7 @@ public class BillDTO {
         this.consumerNumber = consumerNumber;
         this.amount = amount;
         this.dueDate = dueDate;
-        this.account= new AccountDTO(account);
+        this.account= account;
     }
     
     public BillDTO(Bill bill) {
@@ -43,17 +43,18 @@ public class BillDTO {
     	this.amount = bill.getAmount();
     	this.dueDate = bill.getDueDate();
     	this.status = bill.getStatus();
-    	this.account = new AccountDTO(bill.getAccount());
+    	this.account = bill.getAccount();
     }
 
     public Bill toEntity() {
         Bill bills = new Bill();
+        bills.setSequenceId(sequenceId);
         bills.setMasterBiller(billerCode);
         bills.setConsumerNumber(consumerNumber);
         bills.setAmount(amount);
         bills.setDueDate(dueDate);
         bills.setStatus(status);
-        bills.setAccount(account.toEntity());
+        bills.setAccount(account);
         return bills;
     }
 
@@ -105,11 +106,11 @@ public class BillDTO {
         this.status = status;
     }
 
-	public AccountDTO getAccount() {
+	public Account getAccount() {
 		return account;
 	}
 
-	public void setAccount(AccountDTO account) {
+	public void setAccount(Account account) {
 		this.account = account;
 	}
 }

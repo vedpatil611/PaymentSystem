@@ -1,5 +1,7 @@
 package com.barclays.paymentsystem.entity;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -11,7 +13,8 @@ import javax.persistence.Id;
 @Entity
 public class Account {
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(unique = true, nullable = false)
+	@Column(unique = false, nullable = false)
+	@ColumnDefault("1")
 	Integer sequenceId;
 	@Id
 	String accountNo;

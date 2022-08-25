@@ -14,7 +14,6 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Bill {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	Integer sequenceId;
 
 	@ManyToOne

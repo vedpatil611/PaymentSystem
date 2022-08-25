@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import javax.mail.internet.MimeMessage;
 
+import com.barclays.paymentsystem.dto.MasterBillerDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -72,7 +73,19 @@ public class BillServiceImpl implements BillService {
 		return transactionList;
 	}
 
-	@Override
+    @Override
+    public List<BillDTO> getAllBills() throws PaymentSystemException {
+        Iterable<Bill> list = billRepository.findAll();
+        List<BillDTO> billList = new ArrayList<>();
+
+        list.forEach(bill -> billList.add(new BillDTO(bill)));
+        return billList;
+    }
+
+
+
+
+    @Override
 	public List<BillDTO> findAllBetweenDate(String username, LocalDate from, LocalDate to)
 			throws PaymentSystemException {
 		Optional<User> opt = userRepository.findById(username);

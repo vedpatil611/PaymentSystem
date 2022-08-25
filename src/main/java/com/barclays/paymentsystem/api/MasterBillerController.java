@@ -2,6 +2,7 @@ package com.barclays.paymentsystem.api;
 
 import java.util.List;
 
+import com.barclays.paymentsystem.dto.AccountDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,12 @@ public class MasterBillerController {
 	@GetMapping("/biller/list")
 	public ResponseEntity<List<MasterBillerDTO>> getAllMasterBiller() throws PaymentSystemException {
 		List<MasterBillerDTO> list = masterBillerService.getAllMasterBiller();
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+
+	@GetMapping("/account/list")
+	public ResponseEntity<List<AccountDTO>> getAllAccount() throws PaymentSystemException {
+		List<AccountDTO> list = masterBillerService.getAllAccount();
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 	

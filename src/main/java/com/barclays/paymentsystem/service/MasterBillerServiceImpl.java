@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.barclays.paymentsystem.dto.AccountDTO;
+import com.barclays.paymentsystem.entity.Account;
+import com.barclays.paymentsystem.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +29,9 @@ public class MasterBillerServiceImpl implements MasterBillerService {
 	@Autowired
 	MasterBillerRepository masterBillerRepository;
 
+	@Autowired
+	AccountRepository accountRepository;
+
 	@Override
 	public List<MasterBillerDTO> getAllMasterBiller() throws PaymentSystemException {
 		Iterable<MasterBiller> list = masterBillerRepository.findAll();
@@ -33,6 +39,15 @@ public class MasterBillerServiceImpl implements MasterBillerService {
 		
 		list.forEach(biller -> billerList.add(new MasterBillerDTO(biller)));
 		return billerList;
+	}
+
+	@Override
+	public List<AccountDTO> getAllAccount() throws PaymentSystemException {
+		Iterable<Account> list = accountRepository.findAll();
+		List<AccountDTO> accountList = new ArrayList<>();
+
+		list.forEach(account -> accountList.add(new AccountDTO(account)));
+		return accountList;
 	}
 
 	@Override
