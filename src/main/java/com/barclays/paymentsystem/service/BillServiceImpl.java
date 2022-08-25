@@ -29,6 +29,7 @@ import com.barclays.paymentsystem.repository.AccountRepository;
 import com.barclays.paymentsystem.repository.BillRepository;
 import com.barclays.paymentsystem.repository.MasterBillerRepository;
 import com.barclays.paymentsystem.repository.UserRepository;
+import com.barclays.paymentsystem.utils.Mailer;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -54,12 +55,12 @@ public class BillServiceImpl implements BillService {
 	
 	@Autowired
 	MasterBillerRepository masterBillerRepository;
-
-    @Autowired
-    private Configuration config;
-
-    @Autowired
-    private JavaMailSender mailSender;
+//
+//    @Autowired
+//    private Configuration config;
+//
+//    @Autowired
+//    private JavaMailSender mailSender;
     
     /**
 	 * To find Bills
@@ -148,7 +149,7 @@ public class BillServiceImpl implements BillService {
         model.put("EmailID",account.getEmailId());
         model.put("CreationDate", LocalDateTime.now().toString());
 
-        sendEmail(model,"utils.ftl");
+        Mailer.sendEmail(model,"utils.ftl");
         return newBill.getConsumerNumber();
     }
 	
@@ -157,25 +158,25 @@ public class BillServiceImpl implements BillService {
 	 * @param model,path
 	 */
 
-    private void sendEmail(Map<String, Object> model,String path){
-        MimeMessage message = mailSender.createMimeMessage();
-        if(model.get("EmailID") != null && (model.get("EmailID").toString()).length()>0){
-            try{
-                MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
-                        StandardCharsets.UTF_8.name());
-                Template t = config.getTemplate(path);
-                String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
-
-                helper.setFrom("vedpatil611@gmail.com");
-                helper.setTo(model.get("EmailID").toString());
-                helper.setText(html,true);
-                helper.setSubject("Bill Payments - "+model.get("Name").toString());
-                mailSender.send(message);
-                System.out.print("Mail Send");
-            }catch (Exception e) {
-               e.printStackTrace();
-            }
-        }
-
-    }
+//    private void sendEmail(Map<String, Object> model,String path){
+//        MimeMessage message = mailSender.createMimeMessage();
+//        if(model.get("EmailID") != null && (model.get("EmailID").toString()).length()>0){
+//            try{
+//                MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
+//                        StandardCharsets.UTF_8.name());
+//                Template t = config.getTemplate(path);
+//                String html = FreeMarkerTemplateUtils.processTemplateIntoString(t, model);
+//
+//                helper.setFrom("vedpatil611@gmail.com");
+//                helper.setTo(model.get("EmailID").toString());
+//                helper.setText(html,true);
+//                helper.setSubject("Bill Payments - "+model.get("Name").toString());
+//                mailSender.send(message);
+//                System.out.print("Mail Send");
+//            }catch (Exception e) {
+//               e.printStackTrace();
+//            }
+//        }
+//
+//    }
 }

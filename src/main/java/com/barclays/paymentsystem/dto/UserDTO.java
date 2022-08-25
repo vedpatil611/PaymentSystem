@@ -13,7 +13,7 @@ public class UserDTO {
 	String username;
 	String password;
 	Account account;
-	Role role;
+	RoleDTO role;
 
 	/**
 	 * Create new UserDTO instance
@@ -33,7 +33,7 @@ public class UserDTO {
 		this.username = user.getUsername();
 		this.password = user.getPassword();
 		this.account = user.getAccount();
-		this.role = user.getRole();
+		this.role = new RoleDTO(user.getRole());
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class UserDTO {
 		user.setUsername(username);
 		user.setAccount(account);
 		user.setPassword(password);
-		user.setRole(role);
+		user.setRole(role.toEntity());
 
 		return user;
 	}
@@ -76,11 +76,11 @@ public class UserDTO {
 		this.account = account;
 	}
 
-	public Role getRole() {
+	public RoleDTO getRole() {
 		return role;
 	}
 
-	public void setRole(Role role) {
+	public void setRole(RoleDTO role) {
 		this.role = role;
 	}
 

@@ -12,13 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.barclays.paymentsystem.constants.SystemConstants;
 import com.barclays.paymentsystem.dto.RegisteredBillerDTO;
+import com.barclays.paymentsystem.dto.UserDTO;
 import com.barclays.paymentsystem.entity.Account;
 import com.barclays.paymentsystem.entity.Auth;
 import com.barclays.paymentsystem.entity.RegisteredBiller;
+import com.barclays.paymentsystem.entity.Role;
 import com.barclays.paymentsystem.entity.User;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 import com.barclays.paymentsystem.repository.AccountRepository;
 import com.barclays.paymentsystem.repository.RegisteredBillerRepository;
+import com.barclays.paymentsystem.repository.RoleRepository;
 import com.barclays.paymentsystem.repository.UserRepository;
 
 /**
@@ -33,6 +36,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private RoleRepository roleRepository;
+	
 	@Autowired
 	private RegisteredBillerRepository registeredBillerRepo;
 	
@@ -114,8 +120,24 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public User createUser(User user) {
-		return userRepository.save(user);
+	public User createUser(UserDTO user) throws PaymentSystemException {
+		System.out.println(user.getRole());
+		Optional<Role> role = roleRepository.findById(user.getRole().getRoleId());
+		if (!role.isPresent())
+			throw new PaymentSystemException(SystemConstants.ROLE_NOT_FOUND_EXCEPTION);
+		
+		Optional<Account> accountOptional = accountRepository.findById(user.getAccount().getAccountNo());
+		Account account;
+		if (!accountOptional.isPresent())
+			account = accountRepository.save(user.getAccount());
+		else
+			account = user.getAccount();
+		
+		User newUser = new User();
+		newUser.setRole(role.get());
+		newUser.setAccount(account);
+		
+		return userRepository.save(newUser);
 	}
 
 	@Override

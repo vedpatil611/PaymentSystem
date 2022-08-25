@@ -121,7 +121,7 @@ public class PaymentServiceImpl implements PaymentService {
 	 */
 	String payBill(Bill bill, String description) throws PaymentSystemException {
 		Account account = bill.getAccount();
-		Double billAmount = bill.getAmount();		
+		Double billAmount = bill.getAmount();
 		Double currentBalance = account.getCurrentBalance();
 		
 		if (currentBalance >= billAmount) {
@@ -132,9 +132,9 @@ public class PaymentServiceImpl implements PaymentService {
 			Account newAccount = accountRepository.save(account);
 			AccountTransaction newTransaction = saveAccountTranscation(paidBill, description);
 			
-			Bill nextBill = generateNextMonthBill(paidBill);
+//			Bill nextBill = generateNextMonthBill(paidBill);
 			
-			if (paidBill != null && newAccount != null && newTransaction != null && nextBill != null) {
+			if (paidBill != null && newAccount != null && newTransaction != null) {
 				// TODO: send mail for paid bill here (paidBill)
 
 				// TODO: send mail for bill generated for next month (nextBill)
@@ -155,19 +155,19 @@ public class PaymentServiceImpl implements PaymentService {
 	 * @throws PaymentSystemException
 	 */
 	
-	Bill generateNextMonthBill(Bill bill) throws PaymentSystemException {
-		BillDTO billDTO = new BillDTO(bill);
-		billDTO.setSequenceId(null);
-		billDTO.setDueDate(billDTO.getDueDate().plusMonths(1));
-		billDTO.setStatus(BillStatus.PENDING);
-		
-		Bill newBill = billDTO.toEntity();
-		newBill.setAccount(bill.getAccount());
-		newBill = billRepository.save(newBill);
-
-		return newBill;
-	}
-	
+//	Bill generateNextMonthBill(Bill bill) throws PaymentSystemException {
+//		BillDTO billDTO = new BillDTO(bill);
+//		billDTO.setSequenceId(null);
+//		billDTO.setDueDate(billDTO.getDueDate().plusMonths(1));
+//		billDTO.setStatus(BillStatus.PENDING);
+//		
+//		Bill newBill = billDTO.toEntity();
+//		newBill.setAccount(bill.getAccount());
+//		newBill = billRepository.save(newBill);
+//
+//		return newBill;
+//	}
+//	
 	/**
 	 * Save transaction history
 	 * @param bill

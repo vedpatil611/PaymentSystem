@@ -2,6 +2,8 @@ package com.barclays.paymentsystem.exception;
 
 import java.time.LocalDateTime;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,6 +19,8 @@ import com.barclays.paymentsystem.utils.ErrorInfo;
 @RestControllerAdvice
 public class PaymentSystemExceptionController {
 	
+	private Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
 	/**
 	 * exceptionHandler - Catch any uncaught exceptions
 	 * @param exception
@@ -25,9 +29,10 @@ public class PaymentSystemExceptionController {
 	@ExceptionHandler(Exception.class)
 	public ResponseEntity<ErrorInfo> exceptionHandler(Exception exception) {
 		ErrorInfo error = new ErrorInfo();
-		error.setErrorMessage("Request cannot be processed: " + exception.getMessage());
+		error.setErrorMessage("Request cannot be processed");
 		error.setErrorCode(HttpStatus.ACCEPTED.value());
 		error.setTimestamp(LocalDateTime.now());
+		LOGGER.error(exception.getMessage());
 		return new ResponseEntity<ErrorInfo>(error, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	

@@ -34,4 +34,12 @@ public interface MasterBillerService {
 	 * @return Id of newly created master biller
 	 */
 	String addNewMasterBiller(MasterBillerDTO masterBillerDTO) throws PaymentSystemException;
+	
+	/**
+	 * deleteMasaterBiller - Delete master biller from repo
+	 * @param masterBillerDTO
+	 * @return Response string
+	 * @throws PaymentSystemException
+	 */
+	String deleteMasterBiller(String masterBillerCode) throws PaymentSystemException;
 }

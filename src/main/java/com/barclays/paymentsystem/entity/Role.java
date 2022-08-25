@@ -7,17 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
-/**
- * Defining RoleName as Manager or Account
- * 
- * @author PB3C
- *
- */
-enum RoleName {
-	MANAGER, ACCOUNT
-}
-
 /**
  * Role - Role Entity mapped to Role table in database
  * 
@@ -28,16 +17,16 @@ enum RoleName {
 public class Role {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	Integer rollId;
+	Integer roleId;
 	@Enumerated(value = EnumType.STRING)
 	RoleName name;
 
-	public Integer getRollId() {
-		return rollId;
+	public Integer getRoleId() {
+		return roleId;
 	}
 
-	public void setRollId(Integer rollId) {
-		this.rollId = rollId;
+	public void setRoleId(Integer rollId) {
+		this.roleId = rollId;
 	}
 
 	public RoleName getName() {

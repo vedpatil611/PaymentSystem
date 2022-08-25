@@ -54,7 +54,7 @@ public class MasterBillerServiceImpl implements MasterBillerService {
 	public MasterBillerDTO getMasterBiller(String billerCode) throws PaymentSystemException {
 		Optional<MasterBiller> opt = masterBillerRepository.findById(billerCode);
 		if (!opt.isPresent())
-			throw new PaymentSystemException(SystemConstants.BILLER_NOT_FOUND_RESPONSE);
+			throw new PaymentSystemException(SystemConstants.MASTER_BILLER_NOT_FOUND_RESPONSE);
 
 		return new MasterBillerDTO(opt.get());
 	}
@@ -67,10 +67,26 @@ public class MasterBillerServiceImpl implements MasterBillerService {
 	 */
 
 	@Override
-	public String addNewMasterBiller(MasterBillerDTO masterBillerDTO) {
+	public String addNewMasterBiller(MasterBillerDTO masterBillerDTO) throws PaymentSystemException {
+		Optional<MasterBiller> opt = masterBillerRepository.findById(masterBillerDTO.getBillerCode());
+		if (opt.isPresent())
+			throw new PaymentSystemException(SystemConstants.MASTER_BILLER_CODE_ALREADY_EXISTS_RESPONSE);
+		
 		MasterBiller masterBiller = masterBillerDTO.toEntity();
 		MasterBiller newBiller = masterBillerRepository.save(masterBiller);
 		return newBiller.getBillerCode();
 	}
 
+	@Override
+	public String deleteMasterBiller(String masterBillerCode) throws PaymentSystemException {
+		Optional<MasterBiller> opt = masterBillerRepository.findById(masterBillerCode);
+		if (!opt.isPresent())
+			throw new PaymentSystemException(SystemConstants.MASTER_BILLER_NOT_FOUND_RESPONSE);
+		
+		masterBillerRepository.delete(opt.get());
+		
+		return SystemConstants.MASTER_BILLER_DELETED_SUCCESSFULLY_RESPONSE;
+	}
+
+	
 }

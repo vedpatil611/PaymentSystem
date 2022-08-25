@@ -1,11 +1,11 @@
 package com.barclays.paymentsystem.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
 import com.barclays.paymentsystem.dto.RegisteredBillerDTO;
+import com.barclays.paymentsystem.dto.UserDTO;
 import com.barclays.paymentsystem.entity.Auth;
 import com.barclays.paymentsystem.entity.User;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
@@ -19,17 +19,17 @@ import com.barclays.paymentsystem.exception.PaymentSystemException;
  */
 
 public interface UserService {
-	public User createUser(User user);
+	public User createUser(UserDTO user) throws PaymentSystemException;
 
-	public User getUser(String username);
+	public User getUser(String username) throws PaymentSystemException;
 
-	public void updateUser(User user);
+	public void updateUser(User user) throws PaymentSystemException;
 
-	public List<User> getAllUser();
+	public List<User> getAllUser() throws PaymentSystemException;
 
-	public void deleteUser(String username);
+	public void deleteUser(String username) throws PaymentSystemException;
 
-	public String login(Auth authenticationDetails, HttpSession session);
+	public String login(Auth authenticationDetails, HttpSession session) throws PaymentSystemException;
 
 	/**
 	 * getAllSubscribedBillers
