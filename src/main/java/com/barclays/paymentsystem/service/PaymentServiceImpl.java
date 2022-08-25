@@ -6,6 +6,8 @@ import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +39,8 @@ import com.barclays.paymentsystem.repository.UserRepository;
 @Transactional
 public class PaymentServiceImpl implements PaymentService {
 
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
 	@Autowired
 	BillRepository billRepository;
 	
@@ -67,15 +71,17 @@ public class PaymentServiceImpl implements PaymentService {
 		
 		for(Bill pendingBill : pendingBills) {
 			LocalDate today = LocalDate.now();
-			Period dateDiff = Period.between(pendingBill.getDueDate(), today);
+			Period dateDiff = Period.between(today, pendingBill.getDueDate());
 			
 			if (dateDiff.getYears() == 0 && dateDiff.getMonths() == 0 && dateDiff.getDays() <= 3) {
+				LOGGER.info("info: " + pendingBill.getConsumerNumber() + " " + pendingBill.getMasterBiller().getBillerCode() + " " + pendingBill.getAccount().getAccountNo());
 				RegisteredBiller registeredBiller = registeredBillerRepository.findByConsumerNumberAndBillerCodeAndAccount(
 					pendingBill.getConsumerNumber(), 
 					pendingBill.getMasterBiller(), 
 					pendingBill.getAccount()
 				);
-								
+				
+				
 				if (registeredBiller == null)
 					throw new PaymentSystemException(SystemConstants.REGISTERED_BILLER_NOT_FOUND_REPONSE);
 				
@@ -83,7 +89,7 @@ public class PaymentServiceImpl implements PaymentService {
 				
 				if (registeredBiller.getAutopayLimit() == null) {
 					payBill(pendingBill, "Auto paid bill");
-				} else if (registeredBiller.getAutopayLimit() != null && registeredBiller.getAutopayLimit() < pendingBill.getAmount()) {
+				} else if (registeredBiller.getAutopayLimit() != null && registeredBiller.getAutopayLimit() > pendingBill.getAmount()) {
 					payBill(pendingBill, "Auto paid bill");
 				}
 			}
@@ -124,7 +130,9 @@ public class PaymentServiceImpl implements PaymentService {
 		Double billAmount = bill.getAmount();		
 		Double currentBalance = account.getCurrentBalance();
 		
+		
 		if (currentBalance >= billAmount) {
+			LOGGER.info("Paying bill");
 			account.setCurrentBalance(currentBalance - billAmount);
 			bill.setStatus(BillStatus.PAID);
 			
@@ -132,9 +140,9 @@ public class PaymentServiceImpl implements PaymentService {
 			Account newAccount = accountRepository.save(account);
 			AccountTransaction newTransaction = saveAccountTranscation(paidBill, description);
 			
-			Bill nextBill = generateNextMonthBill(paidBill);
+//			Bill nextBill = generateNextMonthBill(paidBill);
 			
-			if (paidBill != null && newAccount != null && newTransaction != null && nextBill != null) {
+			if (paidBill != null && newAccount != null && newTransaction != null) {
 				// TODO: send mail for paid bill here (paidBill)
 
 				// TODO: send mail for bill generated for next month (nextBill)
@@ -155,19 +163,19 @@ public class PaymentServiceImpl implements PaymentService {
 	 * @throws PaymentSystemException
 	 */
 	
-	Bill generateNextMonthBill(Bill bill) throws PaymentSystemException {
-		BillDTO billDTO = new BillDTO(bill);
-		billDTO.setSequenceId(null);
-		billDTO.setDueDate(billDTO.getDueDate().plusMonths(1));
-		billDTO.setStatus(BillStatus.PENDING);
-		
-		Bill newBill = billDTO.toEntity();
-		newBill.setAccount(bill.getAccount());
-		newBill = billRepository.save(newBill);
-
-		return newBill;
-	}
-	
+//	Bill generateNextMonthBill(Bill bill) throws PaymentSystemException {
+//		BillDTO billDTO = new BillDTO(bill);
+//		billDTO.setSequenceId(null);
+//		billDTO.setDueDate(billDTO.getDueDate().plusMonths(1));
+//		billDTO.setStatus(BillStatus.PENDING);
+//		
+//		Bill newBill = billDTO.toEntity();
+//		newBill.setAccount(bill.getAccount());
+//		newBill = billRepository.save(newBill);
+//
+//		return newBill;
+//	}
+//	
 	/**
 	 * Save transaction history
 	 * @param bill

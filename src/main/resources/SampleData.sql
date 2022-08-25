@@ -19,14 +19,15 @@ insert into role values(2,"ACCOUNT");
 insert into registered_biller values(1,120,false,null,123,"1000000","B001");
 insert into registered_biller values(2,123,true,null,133,"1000001","B001");
 insert into registered_biller values(3,130,true,null,123,"1000000","B003");
-insert into registered_biller values(4,180,false,null,143,"1000002","B001");
+insert into registered_biller values(4,180,false,null,143,"1000005","B001");
 insert into registered_biller values(5,300,true,null,153,"1000003","B002");
-insert into registered_biller values(6,null,true,3000,153,"1000004","B004");
+insert into registered_biller values(6,400,true,3000,153,"1000005","B004");
 
-insert into bill(sequence_id, amount, consumer_number, due_date, status, account_no, biller_code) values (1, 100, 123, "2022-08-24", "PENDING", 1000000, "B001");
-insert into bill(sequence_id, amount, consumer_number, due_date, status, account_no, biller_code) values (2, 200, 133, "2022-08-24", "PENDING", 1000001, "B001");
+insert into bill(sequence_id, amount, consumer_number, due_date, status, account_no, biller_code) values (1, 100, 143, "2022-08-24", "PENDING", 1000005, "B001");
+insert into bill(sequence_id, amount, consumer_number, due_date, status, account_no, biller_code) values (2, 200, 153, "2022-08-24", "PENDING", 1000005, "B004");
 
 insert into `user` values("riolu", "lucario", 1000001, 2);
 insert into `user` values("vedangi","12312",1000004,2);
+insert into `user` values("ved", "afnjkwbfukwbfaks9e8236toeqw", 1000005, 2);
 
 commit;
