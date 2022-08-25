@@ -21,7 +21,7 @@ import com.barclays.paymentsystem.dto.AccountTransactionDTO;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 import com.barclays.paymentsystem.service.AccountTransactionService;
 import com.barclays.paymentsystem.utils.TransactionExporter;
-
+import com.barclays.paymentsystem.constants.*;
 @RestController
 public class AccountTransactionController {
 
@@ -29,13 +29,13 @@ public class AccountTransactionController {
 	AccountTransactionService managerControllerService;
 
 	// get all account details
-	@GetMapping("/{username}/accountTransaction")
+	@GetMapping(PaymentSystemControllerConstants.GET_ACCOUNT_TRANSACTIONS)
 	public ResponseEntity<List<AccountTransactionDTO>> getAllAccountTransaction(@PathVariable String username)
 			throws PaymentSystemException {
 		return new ResponseEntity<>(managerControllerService.findAll(username), HttpStatus.OK);
 	}
 
-	@GetMapping("/{username}/accountTransaction/download")
+	@GetMapping(PaymentSystemControllerConstants.GET_DOWNLOAD_ACCOUNT_TRANSACTIONS)
 	public void downloadAllAccountTransaction(@PathVariable String username, HttpServletResponse response)
 			throws PaymentSystemException {
 
@@ -54,7 +54,7 @@ public class AccountTransactionController {
 		}
 	}
 
-	@GetMapping("/{username}/accountTransactionBetween")
+	@GetMapping(PaymentSystemControllerConstants.GET_ACCOUNT_TRANSACTIONS_STARTDATE)
 	public ResponseEntity<List<AccountTransactionDTO>> getAllAccountTransactionByStartDate(
 			@PathVariable String username, @RequestParam LocalDateTime startDate, @RequestParam LocalDateTime endDate)
 			throws PaymentSystemException {
@@ -63,7 +63,7 @@ public class AccountTransactionController {
 				HttpStatus.OK);
 	}
 
-	@GetMapping("/{username}/accountTransactionBetween/download")
+	@GetMapping(PaymentSystemControllerConstants.GET_DOWNLOAD_ACCOUNT_TRANSACTIONS_STARTDATE )
 	public void downloadAccountTransactionByStartDate(@PathVariable String username,
 			@RequestParam LocalDateTime startDate,
 			@RequestParam LocalDateTime endDate,

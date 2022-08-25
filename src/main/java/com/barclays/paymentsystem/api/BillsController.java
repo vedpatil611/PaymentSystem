@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.barclays.paymentsystem.constants.PaymentSystemControllerConstants;
 import com.barclays.paymentsystem.dto.BillDTO;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 import com.barclays.paymentsystem.service.BillService;
@@ -23,13 +24,13 @@ public class BillsController {
 	@Autowired
 	BillService billService;
 
-	@PostMapping("/bill/new")
+	@PostMapping(PaymentSystemControllerConstants.NEW_BILL)
 	public ResponseEntity<String> addNewBill(@RequestBody BillDTO billDTO) throws PaymentSystemException {
 		String newCode = billService.addNewBill(billDTO);
 		return new ResponseEntity<>(newCode, HttpStatus.OK);
 	}
 
-	@GetMapping("/user/{username}/bills")
+	@GetMapping(PaymentSystemControllerConstants.GET_BILL_USERNAME)
 	public ResponseEntity<List<BillDTO>> getBills(@PathVariable String username,
 			@RequestParam(required = false) LocalDate from, 
 			@RequestParam(required = false) LocalDate to)

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.barclays.paymentsystem.constants.PaymentSystemControllerConstants;
 import com.barclays.paymentsystem.dto.RegisteredBillerDTO;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 import com.barclays.paymentsystem.service.UserService;
@@ -21,7 +22,7 @@ public class UserController {
 	@Autowired 
 	private UserService userservice;
 
-	@GetMapping("/users/{username}/allsubscriptions")
+	@GetMapping(PaymentSystemControllerConstants.GET_SUBSCRIBED_BILLERS)
 	public List<RegisteredBillerDTO> getBillers(@PathVariable(name = "username") String username) throws PaymentSystemException{
 		//List<MasterBillerDTO> list = masterBillerService.getAllMasterBiller();
 		//return new ResponseEntity<>(list, HttpStatus.OK);
@@ -29,7 +30,7 @@ public class UserController {
 		//return biller;
 	}
 	
-	@PostMapping("/users/{username}/subscribe")
+	@PostMapping(PaymentSystemControllerConstants.SUBSCRIBE_NEW_BILLER)
 	public ResponseEntity<String> subscribeNewBiller(@PathVariable String username, @RequestBody RegisteredBillerDTO biller) throws PaymentSystemException{
 		String newCode = userservice.subscribeNewBiller(username, biller);
 		return new ResponseEntity<>(newCode, HttpStatus.OK);
