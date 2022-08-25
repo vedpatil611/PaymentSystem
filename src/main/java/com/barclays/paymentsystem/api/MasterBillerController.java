@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.barclays.paymentsystem.constants.PaymentSystemControllerConstants;
 import com.barclays.paymentsystem.dto.MasterBillerDTO;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 import com.barclays.paymentsystem.service.MasterBillerService;
@@ -31,7 +32,7 @@ public class MasterBillerController {
 	 * @return list
 	 * @throws PaymentSystemException
 	 */
-	@GetMapping("/biller/list")
+	@GetMapping(PaymentSystemControllerConstants.GET_MASTERBILLER_LIST)
 	public ResponseEntity<List<MasterBillerDTO>> getAllMasterBiller() throws PaymentSystemException {
 		List<MasterBillerDTO> list = masterBillerService.getAllMasterBiller();
 		return new ResponseEntity<>(list, HttpStatus.OK);
@@ -44,7 +45,7 @@ public class MasterBillerController {
 	 * @return Master Biller
 	 * @throws PaymentSystemException
 	 */
-	@GetMapping("/biller/{masterBillerId}")
+	@GetMapping(PaymentSystemControllerConstants.GET_ID_BILLER)
 	public ResponseEntity<MasterBillerDTO> getMasterBillerById(@PathVariable String masterBillerId)
 			throws PaymentSystemException {
 		MasterBillerDTO masterBiller = masterBillerService.getMasterBiller(masterBillerId);
@@ -58,7 +59,7 @@ public class MasterBillerController {
 	 * @return New Master Biller Code
 	 * @throws PaymentSystemException
 	 */
-	@PostMapping("/biller/new")
+	@PostMapping(PaymentSystemControllerConstants.ADD_NEW_BILLER)
 	public ResponseEntity<String> addNewMasterBiller(@RequestBody MasterBillerDTO masterBillerDTO)
 			throws PaymentSystemException {
 		String newCode = masterBillerService.addNewMasterBiller(masterBillerDTO);

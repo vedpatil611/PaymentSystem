@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.barclays.paymentsystem.constants.PaymentSystemControllerConstants;
 import com.barclays.paymentsystem.constants.SystemConstants;
 import com.barclays.paymentsystem.dto.AccountTransactionDTO;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
@@ -26,11 +27,10 @@ import com.barclays.paymentsystem.utils.TransactionExporter;
  * AccountTransactionController - Rest api for payment transactions
  * @author - P3BC
  */
-
 @RestController
 public class AccountTransactionController {
 
-	@Autowired(required = false)
+	@Autowired
 	AccountTransactionService managerControllerService;
 
 	/**
@@ -40,7 +40,7 @@ public class AccountTransactionController {
 	 * @return all transactions
 	 * @throws PaymentSystemException
 	 */
-	@GetMapping("/{username}/accountTransaction")
+	@GetMapping(PaymentSystemControllerConstants.GET_ACCOUNT_TRANSACTIONS)
 	public ResponseEntity<List<AccountTransactionDTO>> getAllAccountTransaction(@PathVariable String username)
 			throws PaymentSystemException {
 		return new ResponseEntity<>(managerControllerService.findAll(username), HttpStatus.OK);
@@ -53,7 +53,7 @@ public class AccountTransactionController {
 	 * @return all transactions
 	 * @throws PaymentSystemException
 	 */
-	@GetMapping("/{username}/accountTransaction/download")
+	@GetMapping(PaymentSystemControllerConstants.GET_DOWNLOAD_ACCOUNT_TRANSACTIONS)
 	public void downloadAllAccountTransaction(@PathVariable String username, HttpServletResponse response)
 			throws PaymentSystemException {
 
@@ -80,7 +80,7 @@ public class AccountTransactionController {
 	 * @return all transactions with given date
 	 * @throws PaymentSystemException
 	 */
-	@GetMapping("/{username}/accountTransactionBetween")
+	@GetMapping(PaymentSystemControllerConstants.GET_ACCOUNT_TRANSACTIONS_STARTDATE)
 	public ResponseEntity<List<AccountTransactionDTO>> getAllAccountTransactionByStartDate(
 			@PathVariable String username, @RequestParam LocalDateTime startDate, @RequestParam LocalDateTime endDate)
 			throws PaymentSystemException {
@@ -97,7 +97,7 @@ public class AccountTransactionController {
 	 * @return all transactions with given date
 	 * @throws PaymentSystemException
 	 */
-	@GetMapping("/{username}/accountTransactionBetween/download")
+	@GetMapping(PaymentSystemControllerConstants.GET_DOWNLOAD_ACCOUNT_TRANSACTIONS_STARTDATE )
 	public void downloadAccountTransactionByStartDate(@PathVariable String username,
 			@RequestParam LocalDateTime startDate, @RequestParam LocalDateTime endDate, HttpServletResponse response)
 			throws PaymentSystemException {
