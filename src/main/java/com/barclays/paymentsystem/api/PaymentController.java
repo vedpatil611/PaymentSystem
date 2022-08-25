@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.barclays.paymentsystem.constants.PaymentSystemControllerConstants;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
-import com.barclays.paymentsystem.service.PaymentService;
+import com.barclays.paymentsystem.service.BillService;
 
 /*
  * PaymentlController - Rest api for payment
@@ -19,7 +19,7 @@ import com.barclays.paymentsystem.service.PaymentService;
 public class PaymentController {
 	
 	@Autowired
-	PaymentService paymentService;
+	BillService billService;
 	
 	/**
 	 * manuallyPayBill - Start new Payment
@@ -30,6 +30,6 @@ public class PaymentController {
 	 */
 	@PostMapping(PaymentSystemControllerConstants.PAY_BILL_BILLERCODE)
 	public ResponseEntity<String> manuallyPayBill(@PathVariable String username, @PathVariable String billerCode) throws PaymentSystemException {
-		return new ResponseEntity<>(paymentService.manuallyPayBill(username, billerCode), HttpStatus.OK);
+		return new ResponseEntity<>(billService.manuallyPayBill(username, billerCode), HttpStatus.OK);
 	}
 }

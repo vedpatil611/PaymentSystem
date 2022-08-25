@@ -14,7 +14,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.barclays.paymentsystem.dto.AccountTransactionDTO;
-import com.barclays.paymentsystem.exception.PaymentSystemException;
 
 /**
  * TransactionExporter - Exporting Transactions into CSV File

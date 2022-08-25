@@ -1,6 +1,5 @@
 package com.barclays.paymentsystem.service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -10,11 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.barclays.paymentsystem.constants.SystemConstants;
-import com.barclays.paymentsystem.dto.BillDTO;
 import com.barclays.paymentsystem.dto.RegisteredBillerDTO;
 import com.barclays.paymentsystem.entity.Account;
-import com.barclays.paymentsystem.entity.BillStatus;
-import com.barclays.paymentsystem.entity.Bill;
 import com.barclays.paymentsystem.entity.RegisteredBiller;
 import com.barclays.paymentsystem.entity.User;
 import com.barclays.paymentsystem.exception.PaymentSystemException;

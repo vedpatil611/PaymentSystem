@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.barclays.paymentsystem.constants.PaymentSystemControllerConstants;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
-import com.barclays.paymentsystem.service.PaymentService;
+import com.barclays.paymentsystem.service.BillService;
 
 /*
  * CronController - Rest api for Auto Pay bills
@@ -18,7 +18,7 @@ import com.barclays.paymentsystem.service.PaymentService;
 public class CronController {
 
 	@Autowired
-	PaymentService autoPayBillService;
+	BillService billService;
 
 	/**
 	 * payAllBills - Auto Pay Bills
@@ -29,6 +29,6 @@ public class CronController {
 	 */
 	@PostMapping(PaymentSystemControllerConstants.AUTOPAY_BILLS)
 	public ResponseEntity<String> payAllBills() throws PaymentSystemException {
-		return new ResponseEntity<>(autoPayBillService.autoPayBills(), HttpStatus.OK);
+		return new ResponseEntity<>(billService.autoPayBills(), HttpStatus.OK);
 	}
 }
