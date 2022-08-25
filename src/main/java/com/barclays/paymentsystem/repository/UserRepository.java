@@ -9,8 +9,8 @@ import com.barclays.paymentsystem.entity.User;
  * @author PB3C
  *
  */
-
-
 public interface UserRepository extends CrudRepository<User, String> {
+
+	public User findByUsername(String username);
 
 }

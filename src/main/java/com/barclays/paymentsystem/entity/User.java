@@ -41,6 +41,14 @@ public class User {
 		this.password = password;
 	}
 
+	public void setRole(Role role) {
+		this.role = role;
+	}
+	
+	public Role getRole() {
+		return role;
+	}
+
 	public Account getAccount() {
 		return account;
 	}
@@ -48,13 +56,14 @@ public class User {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
-
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
+	
+	public User(String username ,String password,Role role,Account account) {
+		this.password = password;
+		this.username = username;
+		this.account=account;
 		this.role = role;
 	}
 
+	public User() {
+	}
 }

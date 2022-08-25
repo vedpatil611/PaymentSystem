@@ -1,25 +1,23 @@
 package com.barclays.paymentsystem.service;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.barclays.paymentsystem.constants.SystemConstants;
-import com.barclays.paymentsystem.dto.BillDTO;
 import com.barclays.paymentsystem.dto.RegisteredBillerDTO;
 import com.barclays.paymentsystem.entity.Account;
-import com.barclays.paymentsystem.entity.BillStatus;
-import com.barclays.paymentsystem.entity.Bill;
+import com.barclays.paymentsystem.entity.Auth;
 import com.barclays.paymentsystem.entity.RegisteredBiller;
 import com.barclays.paymentsystem.entity.User;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 import com.barclays.paymentsystem.repository.AccountRepository;
-import com.barclays.paymentsystem.repository.BillRepository;
 import com.barclays.paymentsystem.repository.RegisteredBillerRepository;
 import com.barclays.paymentsystem.repository.UserRepository;
 
@@ -28,22 +26,18 @@ import com.barclays.paymentsystem.repository.UserRepository;
  * @author Ved
  *
  */
-
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private UserRepository userRepo;
+	private UserRepository userRepository;
 
 	@Autowired
 	private RegisteredBillerRepository registeredBillerRepo;
-
-	@Autowired
-	BillRepository billRepository;
 	
 	@Autowired
-	AccountRepository accountRepository;
+	private AccountRepository accountRepository;
 	
 	/**
 	 * @getAllSubscribedBillers
@@ -54,7 +48,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public List<RegisteredBillerDTO> getAllSubscribedBillers(String userId) throws PaymentSystemException {
-		Optional<User> user = userRepo.findById(userId);
+		Optional<User> user = userRepository.findById(userId);
 
 		if (!user.isPresent()) {
 			throw new PaymentSystemException("User Not Found");
@@ -86,7 +80,7 @@ public class UserServiceImpl implements UserService {
 		if (registeredBillerDTO == null) 
 			throw new PaymentSystemException(SystemConstants.NEW_SUBSCRIPTION_DETAILS_NOT_PROVIDED);
 		// Optional<MasterBiller> masterBiller = masterRepo.findById(billerCode);
-		Optional<User> user = userRepo.findById(username);
+		Optional<User> user = userRepository.findById(username);
 
 		if (!user.isPresent()) {
 			throw new PaymentSystemException("User Not Found");
@@ -117,6 +111,51 @@ public class UserServiceImpl implements UserService {
 		
 		return newRegistered.getConsumerNumber();
 
+	}
+	
+	@Override
+	public User createUser(User user) {
+		return userRepository.save(user);
+	}
+
+	@Override
+	public String login(Auth authenticationDetails,HttpSession session) {
+		// TODO Auto-generated method stub
+		User user = userRepository.findByUsername(authenticationDetails.getUsername());
+		
+		if(user != null) {
+			if(user.getPassword().equals(authenticationDetails.getPassword())) {
+				session.setAttribute("user_id", user.getUsername());
+				session.setAttribute("user_role", user.getRole());
+				return "user logged in and Username is "+user.getUsername()+"with role"+user.getRole();
+			}	
+			else
+				return "password did not match";
+		}
+		return "no such user found";
+	}
+
+	@Override
+	public User getUser(String username) {
+		return userRepository.findByUsername(username);
+	}
+
+	@Override
+	public void updateUser(User user) {
+		userRepository.save(user);
+	}
+
+	@Override
+	public List<User> getAllUser() {
+		Iterable<User> users = userRepository.findAll();
+		List<User> list = new ArrayList<>();
+		users.forEach(user -> list.add(user));
+		return list;
+	}
+
+	@Override
+	public void deleteUser(String username) {
+		userRepository.delete(userRepository.findByUsername(username));
 	}
 
 }

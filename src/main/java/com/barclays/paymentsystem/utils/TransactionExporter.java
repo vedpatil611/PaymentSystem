@@ -14,7 +14,6 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.barclays.paymentsystem.dto.AccountTransactionDTO;
-import com.barclays.paymentsystem.exception.PaymentSystemException;
 
 /**
  * TransactionExporter - Exporting Transactions into CSV File
@@ -33,9 +32,7 @@ public class TransactionExporter {
 	}
 
 	/**
-	 * To create sheet and write Headers
-	 * 
-	 * @writeHeaderLine
+	 * writeHeaderLine - To create sheet and write Headers
 	 */
 	private void writeHeaderLine() {
 		sheet = workbook.createSheet("Users");
@@ -57,12 +54,11 @@ public class TransactionExporter {
 	}
 
 	/**
-	 * @createCell
+	 * createCell
 	 * @param row
 	 * @param columnCount
 	 * @param value
 	 * @param style
-	 * @return null
 	 */
 	private void createCell(Row row, int columnCount, Object value, CellStyle style) {
 		sheet.autoSizeColumn(columnCount);
@@ -76,15 +72,9 @@ public class TransactionExporter {
 		}
 		cell.setCellStyle(style);
 	}
-	
-	/**
-	 * @writeDatalines
-	 * @param null
-	 */
 
 	/**
-	 * @writeDatalines
-	 * @param null
+	 * writeDatalines
 	 */
 	private void writeDataLines() {
 		int rowCount = 1;
@@ -108,14 +98,8 @@ public class TransactionExporter {
 	}
 	
 	/**
-	 * @export
-	 * @param null
-	 * @throws IOException
-	 */
-
-	/**
-	 * @export
-	 * @param null
+	 * export
+	 * @param response
 	 * @throws IOException
 	 */
 	public void export(HttpServletResponse response) throws IOException {
