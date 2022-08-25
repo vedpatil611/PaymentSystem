@@ -15,11 +15,23 @@ import com.barclays.paymentsystem.dto.RegisteredBillerDTO;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 import com.barclays.paymentsystem.service.UserService;
 
+/*
+ * UserController - Rest api for User details
+ */
+
 @RestController
 public class UserController {
 	
 	@Autowired 
 	private UserService userservice;
+	
+	/**
+	 * getBillers - Get list of subscribed billers by user
+	 * @param username 
+	 * @return List of subscribed billers
+	 * @throws PaymentSystemException
+	 */
+
 
 	@GetMapping("/users/{username}/allsubscriptions")
 	public List<RegisteredBillerDTO> getBillers(@PathVariable(name = "username") String username) throws PaymentSystemException{
@@ -29,6 +41,13 @@ public class UserController {
 		//return biller;
 	}
 	
+	/**
+	 * subscribeNewBiller - Subscribe to new biller
+	 * @param username
+	 * @return New Biller Code
+	 * @throws PaymentSystemException
+	 */
+
 	@PostMapping("/users/{username}/subscribe")
 	public ResponseEntity<String> subscribeNewBiller(@PathVariable String username, @RequestBody RegisteredBillerDTO biller) throws PaymentSystemException{
 		String newCode = userservice.subscribeNewBiller(username, biller);

@@ -17,11 +17,22 @@ import com.barclays.paymentsystem.dto.BillDTO;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 import com.barclays.paymentsystem.service.BillService;
 
+/*
+ * BillController - Rest api for Bill details
+ */
+
 @RestController
 public class BillsController {
 
 	@Autowired
 	BillService billService;
+	
+	/**
+	 * addNewBill - Create new Biller
+	 * @param Biller - Biller data
+	 * @return New Biller Code
+	 * @throws PaymentSystemException
+	 */
 
 	@PostMapping("/bill/new")
 	public ResponseEntity<String> addNewBill(@RequestBody BillDTO billDTO) throws PaymentSystemException {
@@ -29,6 +40,13 @@ public class BillsController {
 		return new ResponseEntity<>(newCode, HttpStatus.OK);
 	}
 
+	/**
+	 * getBills - Get Bills
+	 * @param username - username of user
+	 * @return bills
+	 * @throws PaymentSystemException
+	 */
+	
 	@GetMapping("/user/{username}/bills")
 	public ResponseEntity<List<BillDTO>> getBills(@PathVariable String username,
 			@RequestParam(required = false) LocalDate from, 
