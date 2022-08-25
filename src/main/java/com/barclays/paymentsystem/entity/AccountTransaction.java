@@ -9,6 +9,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+
+/**
+ * AccountTransaction - AccountTransaction Entity mapped to AccountTransaction
+ * table in database
+ * 
+ * @author PB3C
+ *
+ */
 @Entity
 public class AccountTransaction {
 	@Id

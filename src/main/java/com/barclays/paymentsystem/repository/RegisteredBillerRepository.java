@@ -9,6 +9,13 @@ import com.barclays.paymentsystem.entity.Account;
 import com.barclays.paymentsystem.entity.MasterBiller;
 import com.barclays.paymentsystem.entity.RegisteredBiller;
 
+/**
+ * RegisterdBillerRepository - Interface for RegisteredBiller table in database
+ * @author PB3C
+ *
+ */
+
+
 @Repository
 public interface RegisteredBillerRepository extends CrudRepository<RegisteredBiller,Integer> {
 	List<RegisteredBiller> findByAccount(Account account);

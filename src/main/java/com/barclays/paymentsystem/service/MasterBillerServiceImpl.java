@@ -19,15 +19,23 @@ import com.barclays.paymentsystem.repository.MasterBillerRepository;
 
 /**
  * MasterBillerServiceImp - MasterBillerService implementation class
+ * 
  * @author Ved
  *
  */
 @Service
 @Transactional
 public class MasterBillerServiceImpl implements MasterBillerService {
-	
+
 	@Autowired
 	MasterBillerRepository masterBillerRepository;
+	
+	/**
+	 * @getAllMasterBiller
+	 * @param null
+	 * @return List of Biller
+	 * @throws PaymentSystemException
+	 */
 
 	@Autowired
 	AccountRepository accountRepository;
@@ -36,10 +44,17 @@ public class MasterBillerServiceImpl implements MasterBillerService {
 	public List<MasterBillerDTO> getAllMasterBiller() throws PaymentSystemException {
 		Iterable<MasterBiller> list = masterBillerRepository.findAll();
 		List<MasterBillerDTO> billerList = new ArrayList<>();
-		
+
 		list.forEach(biller -> billerList.add(new MasterBillerDTO(biller)));
 		return billerList;
 	}
+	
+	/**
+	 * @getAllMasterBiller
+	 * @param billerCode
+	 * @return new biller
+	 * @throws PaymentSystemException
+	 */
 
 	@Override
 	public List<AccountDTO> getAllAccount() throws PaymentSystemException {
@@ -55,9 +70,16 @@ public class MasterBillerServiceImpl implements MasterBillerService {
 		Optional<MasterBiller> opt = masterBillerRepository.findById(billerCode);
 		if (!opt.isPresent())
 			throw new PaymentSystemException(SystemConstants.BILLER_NOT_FOUND_RESPONSE);
-		
+
 		return new MasterBillerDTO(opt.get());
 	}
+	
+	/**
+	 * @addNewMasterBiller
+	 * @param masterBillerDTO
+	 * @return Biller Code of New Biller
+	 * @throws PaymentSystemException
+	 */
 
 	@Override
 	public String addNewMasterBiller(MasterBillerDTO masterBillerDTO) {
@@ -65,5 +87,5 @@ public class MasterBillerServiceImpl implements MasterBillerService {
 		MasterBiller newBiller = masterBillerRepository.save(masterBiller);
 		return newBiller.getBillerCode();
 	}
-	
+
 }

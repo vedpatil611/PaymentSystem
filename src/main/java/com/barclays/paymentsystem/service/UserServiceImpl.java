@@ -23,6 +23,12 @@ import com.barclays.paymentsystem.repository.BillRepository;
 import com.barclays.paymentsystem.repository.RegisteredBillerRepository;
 import com.barclays.paymentsystem.repository.UserRepository;
 
+/**
+ * UserServiceImpl - implementation class
+ * @author Ved
+ *
+ */
+
 @Service
 @Transactional
 public class UserServiceImpl implements UserService {
@@ -38,6 +44,13 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	AccountRepository accountRepository;
+	
+	/**
+	 * @getAllSubscribedBillers
+	 * @param userId
+	 * @return List of subscribed billers
+	 * @throws PaymentSystemException
+	 */
 	
 	@Override
 	public List<RegisteredBillerDTO> getAllSubscribedBillers(String userId) throws PaymentSystemException {
@@ -59,6 +72,14 @@ public class UserServiceImpl implements UserService {
 
 		return list2;
 	}
+	
+	/**
+	 * @subscribeNewBiller
+	 * @param username
+	 * @param registeredBillerDTO
+	 * @return consumer number of new biller
+	 * @throws PaymentSystemException
+	 */
 
 	@Override
 	public String subscribeNewBiller(String username, RegisteredBillerDTO registeredBillerDTO) throws PaymentSystemException {

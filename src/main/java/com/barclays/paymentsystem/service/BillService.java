@@ -6,6 +6,13 @@ import java.util.List;
 import com.barclays.paymentsystem.dto.BillDTO;
 import com.barclays.paymentsystem.exception.PaymentSystemException;
 
+/**
+ * BIllService - Interface for Bill service api
+ * @author PB3C
+ *
+ */
+
+
 public interface BillService {
 	String addNewBill(BillDTO billDTO) throws PaymentSystemException;
 

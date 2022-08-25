@@ -7,6 +7,12 @@ import com.barclays.paymentsystem.entity.MasterBiller;
 
 import java.time.LocalDate;
 
+/**
+ * BillDTO - Bill Data Transfer Object
+ * 
+ * @author PB3C
+ *
+ */
 public class BillDTO {
     Integer sequenceId;
     MasterBiller billerCode;
@@ -105,7 +111,6 @@ public class BillDTO {
     public void setStatus(BillStatus status) {
         this.status = status;
     }
-
 	public Account getAccount() {
 		return account;
 	}

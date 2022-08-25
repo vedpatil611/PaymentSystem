@@ -4,7 +4,8 @@ import java.time.LocalDateTime;
 
 /**
  * ErrorInfo - Error info for cleaner error display
- * @author Ved
+ * 
+ * @author Ved, Vinay
  *
  */
 public class ErrorInfo {

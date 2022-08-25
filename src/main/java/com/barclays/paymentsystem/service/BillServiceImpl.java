@@ -34,6 +34,12 @@ import com.barclays.paymentsystem.repository.UserRepository;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
+/**
+ * BillServiceImpl - BIll service interface implementation
+ * @author PB3C
+ *
+ */
+
 @Service
 @Transactional
 public class BillServiceImpl implements BillService {
@@ -55,6 +61,13 @@ public class BillServiceImpl implements BillService {
 
     @Autowired
     private JavaMailSender mailSender;
+    
+    /**
+	 * To find Bills
+	 * @param username
+	 * @return List of Bills
+	 * @throws PaymentSystemException
+	 */
 
 	@Override
 	public List<BillDTO> findAll(String username) throws PaymentSystemException {
@@ -72,6 +85,14 @@ public class BillServiceImpl implements BillService {
 
 		return transactionList;
 	}
+	
+	
+	/**
+	 * To find Bills Between Specified Date range
+	 * @param username,from,to
+	 * @return List of Bills
+	 * @throws PaymentSystemException
+	 */
 
     @Override
     public List<BillDTO> getAllBills() throws PaymentSystemException {
@@ -103,6 +124,13 @@ public class BillServiceImpl implements BillService {
 
 		return transactionList;
 	}
+	
+	/**
+	 * @addNewBill
+	 * @param billDTO
+	 * @return consumer number of new bill
+	 * @throws PaymentSystemException
+	 */
 	
 	@Override
     public String addNewBill(BillDTO billDTO) throws PaymentSystemException {
@@ -136,6 +164,11 @@ public class BillServiceImpl implements BillService {
         sendEmail(model,"utils.ftl");
         return newBill.getConsumerNumber();
     }
+	
+	/**
+	 * @sendEmail
+	 * @param model,path
+	 */
 
     private void sendEmail(Map<String, Object> model,String path){
         MimeMessage message = mailSender.createMimeMessage();

@@ -4,6 +4,12 @@ import com.barclays.paymentsystem.entity.Account;
 import com.barclays.paymentsystem.entity.MasterBiller;
 import com.barclays.paymentsystem.entity.RegisteredBiller;
 
+/**
+ * RegisteredBillerDTO - RegisteredBiller Data Transfer Object
+ * 
+ * @author PB3C
+ *
+ */
 public class RegisteredBillerDTO {
 	Integer sequenceID;
 	MasterBiller billerCode;
@@ -13,10 +19,18 @@ public class RegisteredBillerDTO {
 	Double amount;
 	Double autopayLimit;
 
+	/**
+	 * Create new RegisteredBillerDTO instance
+	 */
 	public RegisteredBillerDTO() {
 
 	}
 
+	/**
+	 * Create new RegisteredBillerDTO instance from RegisteredBiller entity
+	 * 
+	 * @param registeredrBiller - RegisteredBiller entity
+	 */
 	public RegisteredBillerDTO(RegisteredBiller registeredBiller) {
 		super();
 		// this.sequenceID = registeredBiller.getSequenceID();
@@ -28,6 +42,11 @@ public class RegisteredBillerDTO {
 		this.amount = registeredBiller.getAmount();
 	}
 
+	/**
+	 * Convert RegisteredBillerDTO to RegisteredBiller entity
+	 * 
+	 * @return RegisteredBiller entity
+	 */
 	public RegisteredBiller toRegisteredBillerEntity() {
 		RegisteredBiller registeredBiller = new RegisteredBiller();
 		registeredBiller.setBillerCode(billerCode);
